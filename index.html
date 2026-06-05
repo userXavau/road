@@ -166,12 +166,13 @@ footer{border-top:1px solid var(--border);padding:2rem;text-align:center;color:v
 .z-sec-label{font-family:'Unbounded',sans-serif;font-size:11px;color:var(--accent);letter-spacing:.12em;margin-bottom:.4rem}
 .z-h2{font-family:'Unbounded',sans-serif;font-size:clamp(1.2rem,2.2vw,1.7rem);font-weight:600;margin-bottom:.4rem}
 .z-sec-sub{color:var(--muted);font-size:14px;margin-bottom:2rem;max-width:600px}
-.card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin-bottom:2.5rem}
+/* card-grid: только шапки карточек в сетке */
+.card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;margin-bottom:0;align-items:start}
 
 /* TCARD */
-.tcard{background:var(--surface);border:1px solid var(--border);border-radius:var(--card-r);overflow:hidden;transition:border-color .25s,transform .25s;cursor:pointer;user-select:none}
+.tcard{background:var(--surface);border:1px solid var(--border);border-radius:var(--card-r);overflow:visible;transition:border-color .25s,transform .25s;cursor:pointer;user-select:none}
 .tcard:hover{border-color:var(--border2);transform:translateY(-2px)}
-.tcard.open{border-color:rgba(79,255,176,0.25);transform:none}
+.tcard.open{border-color:rgba(79,255,176,0.35);transform:none}
 .tcard-head{padding:1.2rem 1.3rem;display:flex;align-items:flex-start;gap:12px}
 .tcard-icon{width:38px;height:38px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;margin-top:2px}
 .ic-g{background:rgba(79,255,176,0.1)}
@@ -191,25 +192,31 @@ footer{border-top:1px solid var(--border);padding:2rem;text-align:center;color:v
 .tr{color:var(--accent3);border-color:rgba(255,107,107,.3);background:rgba(255,107,107,.06)}
 .ta{color:var(--accent4);border-color:rgba(255,184,77,.3);background:rgba(255,184,77,.06)}
 .tp{color:#a78bfa;border-color:rgba(167,139,250,.3);background:rgba(167,139,250,.06)}
-.drawer{max-height:0;overflow:hidden;transition:max-height .45s cubic-bezier(.4,0,.2,1)}
-.drawer.open{max-height:3000px}
-.drawer-inner{border-top:1px solid var(--border);padding:1.5rem 1.3rem}
-.dsec{margin-bottom:1.4rem}
+
+/* Drawer — на всю ширину грида */
+.drawer{display:none;grid-column:1/-1;
+  background:var(--surface2);
+  border:1px solid rgba(79,255,176,0.2);
+  border-radius:var(--card-r);
+  margin-top:-4px;margin-bottom:8px}
+.drawer.open{display:block}
+.drawer-inner{padding:2rem 2.5rem}
+.dsec{margin-bottom:1.6rem}
 .dsec:last-child{margin-bottom:0}
-.dsec-title{font-family:'Unbounded',sans-serif;font-size:11px;font-weight:600;letter-spacing:.1em;color:var(--accent);margin-bottom:.8rem;text-transform:uppercase}
-.dlist{list-style:none}
-.dlist li{display:flex;align-items:flex-start;gap:10px;font-size:13.5px;color:var(--text);padding:6px 0;border-bottom:1px solid var(--border);line-height:1.5}
+.dsec-title{font-family:'Unbounded',sans-serif;font-size:11px;font-weight:600;letter-spacing:.1em;color:var(--accent);margin-bottom:.9rem;text-transform:uppercase}
+.dlist{list-style:none;display:grid;grid-template-columns:repeat(auto-fill,minmax(380px,1fr));gap:0}
+.dlist li{display:flex;align-items:flex-start;gap:10px;font-size:14px;color:var(--text);padding:8px 16px 8px 0;border-bottom:1px solid var(--border);line-height:1.6}
 .dlist li:last-child{border-bottom:none}
-.dlist li::before{content:'→';color:var(--accent);flex-shrink:0;margin-top:2px;font-size:12px}
-.dlist li b{font-weight:600}
+.dlist li::before{content:'→';color:var(--accent);flex-shrink:0;margin-top:3px;font-size:12px}
+.dlist li b{font-weight:600;white-space:nowrap}
 .dlist li span{color:var(--muted);font-size:12px;display:block;margin-top:2px}
-.warn-box{background:rgba(255,184,77,0.07);border:1px solid rgba(255,184,77,0.2);border-radius:10px;padding:1rem 1.1rem;font-size:13px;color:var(--text);line-height:1.6;margin-top:.75rem}
+.warn-box{background:rgba(255,184,77,0.07);border:1px solid rgba(255,184,77,0.2);border-radius:10px;padding:1rem 1.2rem;font-size:13.5px;color:var(--text);line-height:1.6;margin-top:.75rem}
 .warn-box b{color:var(--accent4)}
-.law-ref{display:inline-flex;align-items:center;gap:5px;font-size:12px;color:var(--accent2);border:1px solid rgba(61,224,255,.25);border-radius:6px;padding:3px 10px;text-decoration:none;margin:.6rem .3rem 0 0;transition:background .2s}
+.law-ref{display:inline-flex;align-items:center;gap:5px;font-size:12px;color:var(--accent2);border:1px solid rgba(61,224,255,.25);border-radius:6px;padding:4px 12px;text-decoration:none;margin:.6rem .4rem 0 0;transition:background .2s}
 .law-ref:hover{background:rgba(61,224,255,.08)}
-.dtable{width:100%;border-collapse:collapse;font-size:13px;margin-top:.5rem}
-.dtable th{font-family:'Unbounded',sans-serif;font-size:10px;letter-spacing:.08em;color:var(--muted);font-weight:500;padding:6px 10px;border-bottom:1px solid var(--border);text-align:left}
-.dtable td{padding:8px 10px;border-bottom:1px solid var(--border);color:var(--text);vertical-align:top;line-height:1.5}
+.dtable{width:100%;border-collapse:collapse;font-size:14px;margin-top:.5rem}
+.dtable th{font-family:'Unbounded',sans-serif;font-size:10px;letter-spacing:.08em;color:var(--muted);font-weight:500;padding:8px 12px;border-bottom:1px solid var(--border);text-align:left}
+.dtable td{padding:10px 12px;border-bottom:1px solid var(--border);color:var(--text);vertical-align:top;line-height:1.5}
 .dtable tr:last-child td{border-bottom:none}
 .dtable tr:hover td{background:rgba(255,255,255,0.02)}
 
@@ -965,23 +972,43 @@ document.getElementById('z-tabs-inner').addEventListener('click', function(e) {
 });
 
 // ===== ZAKON: TCARD ACCORDION =====
+// Move drawers out of tcards into grid on page load
+document.querySelectorAll('.card-grid').forEach(function(grid) {
+  // collect drawers and their source cards
+  var items = [];
+  grid.querySelectorAll('.tcard').forEach(function(card) {
+    var drawer = card.querySelector('.drawer');
+    if (drawer) {
+      card.removeChild(drawer);
+      items.push({ card: card, drawer: drawer });
+    }
+  });
+  // append each drawer after its card as grid child
+  items.forEach(function(item) {
+    item.card.after(item.drawer);
+    item.drawer.style.display = 'none';
+  });
+});
+
 document.addEventListener('click', function(e) {
   var card = e.target.closest('.tcard');
   if (!card) return;
-  var drawer = card.querySelector('.drawer');
-  if (!drawer) return;
-  var isOpen = card.classList.contains('open');
   var grid = card.closest('.card-grid');
-  if (grid) {
-    grid.querySelectorAll('.tcard').forEach(function(c){
-      c.classList.remove('open');
-      var d = c.querySelector('.drawer');
-      if (d) d.classList.remove('open');
-    });
-  }
+  if (!grid) return;
+
+  var isOpen = card.classList.contains('open');
+
+  // close all in this grid
+  grid.querySelectorAll('.tcard').forEach(function(c){ c.classList.remove('open'); });
+  grid.querySelectorAll('.drawer').forEach(function(d){ d.style.display = 'none'; d.classList.remove('open'); });
+
   if (!isOpen) {
     card.classList.add('open');
-    drawer.classList.add('open');
+    var next = card.nextElementSibling;
+    if (next && next.classList.contains('drawer')) {
+      next.style.display = 'block';
+      next.classList.add('open');
+    }
   }
 });
 
