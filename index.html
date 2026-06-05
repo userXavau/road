@@ -6,284 +6,253 @@
 <title>Дорожная карта специалиста по ИБ</title>
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;700&family=Golos+Text:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg: #0a0c10;
-  --surface: #11141a;
-  --surface2: #181c24;
-  --border: rgba(255,255,255,0.07);
-  --border2: rgba(255,255,255,0.12);
-  --accent: #4fffb0;
-  --accent2: #3de0ff;
-  --accent3: #ff6b6b;
-  --accent4: #ffb84d;
-  --text: #f0f2f7;
-  --muted: #6e7890;
-  --card-r: 14px;
+:root{
+  --bg:#0a0c10;--surface:#11141a;--surface2:#181c24;
+  --border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.14);
+  --accent:#4fffb0;--accent2:#3de0ff;--accent3:#ff6b6b;--accent4:#ffb84d;
+  --text:#f0f2f7;--muted:#6e7890;--card-r:14px;
 }
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
-body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: 'Golos Text', sans-serif;
-  font-size: 15px;
-  line-height: 1.65;
-  overflow-x: hidden;
-}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Golos Text',sans-serif;font-size:15px;line-height:1.65;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:0}
 
-/* noise overlay */
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-  pointer-events: none;
-  z-index: 0;
-}
+/* ===== PAGE SWITCHING ===== */
+.page{display:none}
+.page.active{display:block}
 
-/* ---- HERO ---- */
-.hero {
-  position: relative;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 6rem 2rem 4rem;
-  overflow: hidden;
-}
-.hero-glow {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(120px);
-  pointer-events: none;
-  z-index: 0;
-}
-.glow1 { width: 600px; height: 600px; top: -150px; left: -100px; background: rgba(79,255,176,0.08); }
-.glow2 { width: 500px; height: 500px; bottom: -100px; right: -80px; background: rgba(61,224,255,0.07); }
-.hero-inner {
-  position: relative; z-index: 1;
-  max-width: 900px; margin: 0 auto; width: 100%;
-  text-align: center;
-}
-.hero-label {
-  display: inline-flex; align-items: center; gap: 8px;
-  font-size: 11px; font-family: 'Unbounded', sans-serif; font-weight: 400;
-  letter-spacing: .15em; text-transform: uppercase;
-  color: var(--accent); background: rgba(79,255,176,0.08);
-  border: 1px solid rgba(79,255,176,0.2);
-  padding: 6px 16px; border-radius: 100px; margin-bottom: 2rem;
-}
-.hero-label::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: pulse 2s infinite; }
-@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(1.5)} }
-h1 {
-  font-family: 'Unbounded', sans-serif;
-  font-size: clamp(2.2rem, 5vw, 3.8rem);
-  font-weight: 700; line-height: 1.15;
-  margin-bottom: 1.5rem;
-  background: linear-gradient(135deg, #f0f2f7 0%, #b0bdd4 100%);
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-}
-h1 span {
-  background: linear-gradient(90deg, var(--accent), var(--accent2));
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-}
-.hero-desc {
-  font-size: 1.05rem; color: var(--muted); max-width: 560px; margin: 0 auto 2.5rem;
-}
-.hero-stats {
-  display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; margin-top: 3rem;
-}
-.stat {
-  text-align: center;
-}
-.stat-num {
-  font-family: 'Unbounded', sans-serif; font-size: 1.8rem; font-weight: 600;
-  color: var(--accent);
-}
-.stat-lbl { font-size: 12px; color: var(--muted); margin-top: 2px; }
+/* ===== SHARED ===== */
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(1.5)}}
+@keyframes fadein{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+.fade-in{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
+.fade-in.visible{opacity:1;transform:none}
 
-/* ---- NAV ---- */
-nav {
-  position: sticky; top: 0; z-index: 100;
-  backdrop-filter: blur(20px);
-  background: rgba(10,12,16,0.85);
-  border-bottom: 1px solid var(--border);
-  padding: 0 2rem;
-}
-.nav-inner {
-  max-width: 1100px; margin: 0 auto;
-  display: flex; align-items: center; gap: 0;
-  overflow-x: auto; scrollbar-width: none;
-}
-.nav-inner::-webkit-scrollbar { display: none; }
-.nav-item {
-  display: flex; align-items: center; gap: 6px;
-  padding: 1rem 1.2rem; white-space: nowrap;
-  font-size: 13px; color: var(--muted);
-  text-decoration: none; border-bottom: 2px solid transparent;
-  transition: color .2s, border-color .2s;
-}
-.nav-item:hover { color: var(--text); }
-.nav-item.active { color: var(--accent); border-bottom-color: var(--accent); }
-.nav-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+/* ===== TOP BAR (global) ===== */
+#topbar{position:fixed;top:0;left:0;right:0;z-index:200;backdrop-filter:blur(20px);
+  background:rgba(10,12,16,0.9);border-bottom:1px solid var(--border);
+  padding:0 2rem;display:none}
+#topbar.show{display:block}
+.topbar-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;gap:1rem;height:52px}
+.back-btn{display:flex;align-items:center;gap:7px;font-size:13px;color:var(--muted);
+  background:transparent;border:none;cursor:pointer;font-family:'Golos Text',sans-serif;
+  padding:6px 0;transition:color .2s}
+.back-btn:hover{color:var(--accent)}
+.back-btn span{font-size:16px}
+.topbar-sep{color:var(--border2);font-size:12px}
+.topbar-title{font-family:'Unbounded',sans-serif;font-size:11px;color:var(--text);letter-spacing:.06em}
 
-/* ---- MAIN ---- */
-main { max-width: 1100px; margin: 0 auto; padding: 0 2rem 6rem; }
-.section { padding: 5rem 0 1rem; }
-.section-header { margin-bottom: 2.5rem; }
-.section-num {
-  font-family: 'Unbounded', sans-serif; font-size: 11px;
-  color: var(--accent); letter-spacing: .12em; margin-bottom: .5rem;
-}
-h2 {
-  font-family: 'Unbounded', sans-serif;
-  font-size: clamp(1.3rem, 2.5vw, 1.9rem);
-  font-weight: 600; line-height: 1.25;
-  margin-bottom: .5rem;
-}
-.section-sub { color: var(--muted); font-size: 14px; max-width: 600px; }
-.grid { display: grid; gap: 14px; }
-.grid-3 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
-.grid-2 { grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); }
+/* ===== HOME: HERO ===== */
+.hero{position:relative;min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:6rem 2rem 4rem;overflow:hidden}
+.hero-glow{position:absolute;border-radius:50%;filter:blur(120px);pointer-events:none;z-index:0}
+.glow1{width:600px;height:600px;top:-150px;left:-100px;background:rgba(79,255,176,0.08)}
+.glow2{width:500px;height:500px;bottom:-100px;right:-80px;background:rgba(61,224,255,0.07)}
+.hero-inner{position:relative;z-index:1;max-width:900px;margin:0 auto;width:100%;text-align:center}
+.hero-label{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-family:'Unbounded',sans-serif;
+  letter-spacing:.15em;text-transform:uppercase;color:var(--accent);
+  background:rgba(79,255,176,0.08);border:1px solid rgba(79,255,176,0.2);
+  padding:6px 16px;border-radius:100px;margin-bottom:2rem}
+.hero-label::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 2s infinite}
+h1{font-family:'Unbounded',sans-serif;font-size:clamp(2.2rem,5vw,3.8rem);font-weight:700;line-height:1.15;margin-bottom:1.5rem;
+  background:linear-gradient(135deg,#f0f2f7 0%,#b0bdd4 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+h1 span{background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-desc{font-size:1.05rem;color:var(--muted);max-width:560px;margin:0 auto 2.5rem}
+.hero-stats{display:flex;justify-content:center;gap:2rem;flex-wrap:wrap;margin-top:3rem}
+.stat{text-align:center}
+.stat-num{font-family:'Unbounded',sans-serif;font-size:1.8rem;font-weight:600;color:var(--accent)}
+.stat-lbl{font-size:12px;color:var(--muted);margin-top:2px}
 
-/* ---- CARDS ---- */
-.card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--card-r);
-  padding: 1.5rem;
-  position: relative; overflow: hidden;
-  transition: border-color .25s, transform .25s;
-}
-.card:hover { border-color: var(--border2); transform: translateY(-2px); }
-.card::before {
-  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
-}
-.card.accent-green { border-color: rgba(79,255,176,0.2); }
-.card.accent-green::after {
-  content: ''; position: absolute; top: -40px; right: -40px;
-  width: 120px; height: 120px; border-radius: 50%;
-  background: rgba(79,255,176,0.06); filter: blur(20px);
-}
-.card.accent-blue { border-color: rgba(61,224,255,0.2); }
-.card.accent-blue::after {
-  content: ''; position: absolute; top: -40px; right: -40px;
-  width: 120px; height: 120px; border-radius: 50%;
-  background: rgba(61,224,255,0.06); filter: blur(20px);
-}
-.card.accent-red { border-color: rgba(255,107,107,0.2); }
-.card.accent-amber { border-color: rgba(255,184,77,0.2); }
-.card-icon {
-  width: 40px; height: 40px; border-radius: 10px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 18px; margin-bottom: 1rem; flex-shrink: 0;
-}
-.icon-green { background: rgba(79,255,176,0.1); color: var(--accent); }
-.icon-blue { background: rgba(61,224,255,0.1); color: var(--accent2); }
-.icon-red { background: rgba(255,107,107,0.1); color: var(--accent3); }
-.icon-amber { background: rgba(255,184,77,0.1); color: var(--accent4); }
-.icon-purple { background: rgba(167,139,250,0.1); color: #a78bfa; }
-.card-title {
-  font-family: 'Unbounded', sans-serif; font-size: 13px; font-weight: 600;
-  margin-bottom: .5rem; line-height: 1.3;
-}
-.card-desc { font-size: 13px; color: var(--muted); line-height: 1.6; }
-.tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 1rem; }
-.tag {
-  font-size: 10px; font-weight: 500; letter-spacing: .05em;
-  padding: 3px 9px; border-radius: 100px;
-  border: 1px solid;
-}
-.tag-g { color: var(--accent); border-color: rgba(79,255,176,0.3); background: rgba(79,255,176,0.06); }
-.tag-b { color: var(--accent2); border-color: rgba(61,224,255,0.3); background: rgba(61,224,255,0.06); }
-.tag-r { color: var(--accent3); border-color: rgba(255,107,107,0.3); background: rgba(255,107,107,0.06); }
-.tag-a { color: var(--accent4); border-color: rgba(255,184,77,0.3); background: rgba(255,184,77,0.06); }
-.tag-p { color: #a78bfa; border-color: rgba(167,139,250,0.3); background: rgba(167,139,250,0.06); }
-.new-badge {
-  font-size: 9px; font-family: 'Unbounded', sans-serif; font-weight: 600;
-  letter-spacing: .08em; padding: 2px 7px; border-radius: 100px;
-  background: rgba(79,255,176,0.12); color: var(--accent);
-  border: 1px solid rgba(79,255,176,0.25); margin-left: 6px; vertical-align: middle;
-}
+/* ===== HOME: NAV ===== */
+#home-nav{position:sticky;top:0;z-index:100;backdrop-filter:blur(20px);background:rgba(10,12,16,0.85);border-bottom:1px solid var(--border);padding:0 2rem}
+.nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;overflow-x:auto;scrollbar-width:none}
+.nav-inner::-webkit-scrollbar{display:none}
+.nav-item{display:flex;align-items:center;gap:6px;padding:1rem 1.2rem;white-space:nowrap;font-size:13px;color:var(--muted);
+  text-decoration:none;border-bottom:2px solid transparent;transition:color .2s,border-color .2s}
+.nav-item:hover{color:var(--text)}
+.nav-item.active{color:var(--accent);border-bottom-color:var(--accent)}
+.nav-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
 
-/* ---- TIMELINE (plan) ---- */
-.timeline { position: relative; padding-left: 2rem; }
-.timeline::before {
-  content: ''; position: absolute; left: 0; top: 8px; bottom: 0;
-  width: 1px; background: linear-gradient(to bottom, var(--accent), transparent);
-}
-.tl-item { position: relative; margin-bottom: 2rem; }
-.tl-dot {
-  position: absolute; left: -2.3rem; top: 4px;
-  width: 12px; height: 12px; border-radius: 50%;
-  background: var(--bg); border: 2px solid var(--accent);
-  box-shadow: 0 0 10px rgba(79,255,176,0.4);
-}
-.tl-week {
-  font-family: 'Unbounded', sans-serif; font-size: 11px;
-  color: var(--accent); margin-bottom: .3rem; letter-spacing: .08em;
-}
-.tl-title { font-weight: 600; font-size: 15px; margin-bottom: .4rem; }
-.tl-tasks { list-style: none; }
-.tl-tasks li {
-  font-size: 13px; color: var(--muted); padding: 3px 0;
-  display: flex; align-items: flex-start; gap: 8px;
-}
-.tl-tasks li::before {
-  content: '→'; color: var(--accent); flex-shrink: 0; margin-top: 1px;
-}
+/* ===== HOME: MAIN ===== */
+#home-main{max-width:1100px;margin:0 auto;padding:0 2rem 6rem}
+.section{padding:5rem 0 1rem}
+.section-header{margin-bottom:2.5rem}
+.section-num{font-family:'Unbounded',sans-serif;font-size:11px;color:var(--accent);letter-spacing:.12em;margin-bottom:.5rem}
+h2{font-family:'Unbounded',sans-serif;font-size:clamp(1.3rem,2.5vw,1.9rem);font-weight:600;line-height:1.25;margin-bottom:.5rem}
+.section-sub{color:var(--muted);font-size:14px;max-width:600px}
+.grid{display:grid;gap:14px}
+.grid-3{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.grid-2{grid-template-columns:repeat(auto-fit,minmax(340px,1fr))}
 
-/* ---- CHECKLIST ---- */
-.checklist { list-style: none; }
-.checklist li {
-  display: flex; align-items: flex-start; gap: 12px;
-  padding: 10px 0; border-bottom: 1px solid var(--border);
-  font-size: 14px;
-}
-.checklist li:last-child { border-bottom: none; }
-.check-icon { flex-shrink: 0; width: 20px; height: 20px; margin-top: 1px; }
-.check-label { color: var(--muted); font-size: 12px; }
-.check-main { font-weight: 500; }
+/* ===== HOME: CARDS ===== */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--card-r);padding:1.5rem;position:relative;overflow:hidden;transition:border-color .25s,transform .25s}
+.card:hover{border-color:var(--border2);transform:translateY(-2px)}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.12),transparent)}
+.card.accent-green{border-color:rgba(79,255,176,0.2)}
+.card.accent-green::after{content:'';position:absolute;top:-40px;right:-40px;width:120px;height:120px;border-radius:50%;background:rgba(79,255,176,0.06);filter:blur(20px)}
+.card.accent-blue{border-color:rgba(61,224,255,0.2)}
+.card.accent-blue::after{content:'';position:absolute;top:-40px;right:-40px;width:120px;height:120px;border-radius:50%;background:rgba(61,224,255,0.06);filter:blur(20px)}
+.card.accent-red{border-color:rgba(255,107,107,0.2)}
+.card.accent-amber{border-color:rgba(255,184,77,0.2)}
+.card-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:1rem;flex-shrink:0}
+.icon-green{background:rgba(79,255,176,0.1);color:var(--accent)}
+.icon-blue{background:rgba(61,224,255,0.1);color:var(--accent2)}
+.icon-red{background:rgba(255,107,107,0.1);color:var(--accent3)}
+.icon-amber{background:rgba(255,184,77,0.1);color:var(--accent4)}
+.icon-purple{background:rgba(167,139,250,0.1);color:#a78bfa}
+.card-title{font-family:'Unbounded',sans-serif;font-size:13px;font-weight:600;margin-bottom:.5rem;line-height:1.3}
+.card-desc{font-size:13px;color:var(--muted);line-height:1.6}
+.tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:1rem}
+.tag{font-size:10px;font-weight:500;letter-spacing:.05em;padding:3px 9px;border-radius:100px;border:1px solid}
+.tag-g{color:var(--accent);border-color:rgba(79,255,176,0.3);background:rgba(79,255,176,0.06)}
+.tag-b{color:var(--accent2);border-color:rgba(61,224,255,0.3);background:rgba(61,224,255,0.06)}
+.tag-r{color:var(--accent3);border-color:rgba(255,107,107,0.3);background:rgba(255,107,107,0.06)}
+.tag-a{color:var(--accent4);border-color:rgba(255,184,77,0.3);background:rgba(255,184,77,0.06)}
+.tag-p{color:#a78bfa;border-color:rgba(167,139,250,0.3);background:rgba(167,139,250,0.06)}
+.new-badge{font-size:9px;font-family:'Unbounded',sans-serif;font-weight:600;letter-spacing:.08em;padding:2px 7px;border-radius:100px;background:rgba(79,255,176,0.12);color:var(--accent);border:1px solid rgba(79,255,176,0.25);margin-left:6px;vertical-align:middle}
 
-/* ---- CERTS ---- */
-.cert-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
-.cert-card {
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: 10px; padding: 1.2rem;
-  display: flex; align-items: center; gap: 12px;
-}
-.cert-icon { font-size: 28px; flex-shrink: 0; }
-.cert-name { font-weight: 600; font-size: 14px; }
-.cert-sub { font-size: 12px; color: var(--muted); }
-.cert-level {
-  font-size: 10px; font-weight: 600; letter-spacing: .06em;
-  padding: 2px 8px; border-radius: 100px; margin-top: 4px; display: inline-block;
-}
-.lvl-must { background: rgba(79,255,176,0.1); color: var(--accent); }
-.lvl-plus { background: rgba(255,184,77,0.1); color: var(--accent4); }
+/* Clickable section cards */
+.card.goto{cursor:pointer}
+.card.goto:hover{border-color:rgba(79,255,176,0.3)}
+.goto-arrow{display:inline-flex;align-items:center;gap:6px;margin-top:1rem;font-size:12px;color:var(--accent);font-family:'Unbounded',sans-serif;letter-spacing:.06em}
 
-/* ---- FOOTER ---- */
-footer {
-  border-top: 1px solid var(--border);
-  padding: 2rem; text-align: center;
-  color: var(--muted); font-size: 13px;
-  max-width: 1100px; margin: 0 auto;
-}
+/* ===== HOME: TIMELINE ===== */
+.timeline{position:relative;padding-left:2rem}
+.timeline::before{content:'';position:absolute;left:0;top:8px;bottom:0;width:1px;background:linear-gradient(to bottom,var(--accent),transparent)}
+.tl-item{position:relative;margin-bottom:2rem}
+.tl-dot{position:absolute;left:-2.3rem;top:4px;width:12px;height:12px;border-radius:50%;background:var(--bg);border:2px solid var(--accent);box-shadow:0 0 10px rgba(79,255,176,0.4)}
+.tl-week{font-family:'Unbounded',sans-serif;font-size:11px;color:var(--accent);margin-bottom:.3rem;letter-spacing:.08em}
+.tl-title{font-weight:600;font-size:15px;margin-bottom:.4rem}
+.tl-tasks{list-style:none}
+.tl-tasks li{font-size:13px;color:var(--muted);padding:3px 0;display:flex;align-items:flex-start;gap:8px}
+.tl-tasks li::before{content:'→';color:var(--accent);flex-shrink:0;margin-top:1px}
 
-/* animations */
-.fade-in { opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; }
-.fade-in.visible { opacity: 1; transform: none; }
+/* ===== HOME: CERTS ===== */
+.cert-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.cert-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem;display:flex;align-items:center;gap:12px}
+.cert-icon{font-size:28px;flex-shrink:0}
+.cert-name{font-weight:600;font-size:14px}
+.cert-sub{font-size:12px;color:var(--muted)}
+.cert-level{font-size:10px;font-weight:600;letter-spacing:.06em;padding:2px 8px;border-radius:100px;margin-top:4px;display:inline-block}
+.lvl-must{background:rgba(79,255,176,0.1);color:var(--accent)}
+.lvl-plus{background:rgba(255,184,77,0.1);color:var(--accent4)}
 
-@media (max-width: 600px) {
-  .hero { padding: 5rem 1.5rem 3rem; }
-  main { padding: 0 1.5rem 4rem; }
-  nav { padding: 0 1rem; }
-  h1 { font-size: 1.9rem; }
+/* ===== HOME: FOOTER ===== */
+footer{border-top:1px solid var(--border);padding:2rem;text-align:center;color:var(--muted);font-size:13px;max-width:1100px;margin:0 auto}
+
+/* ===== ZAKON PAGE ===== */
+.z-hero{position:relative;padding:5rem 2rem 2.5rem;overflow:hidden;text-align:center}
+.z-glow{position:absolute;border-radius:50%;filter:blur(110px);pointer-events:none;z-index:0}
+.zg1{width:500px;height:500px;top:-150px;left:-80px;background:rgba(79,255,176,0.07)}
+.zg2{width:400px;height:400px;bottom:-80px;right:-60px;background:rgba(61,224,255,0.06)}
+.z-hero-inner{position:relative;z-index:1;max-width:900px;margin:0 auto}
+.chip{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-family:'Unbounded',sans-serif;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--accent);
+  background:rgba(79,255,176,0.08);border:1px solid rgba(79,255,176,0.2);
+  padding:6px 16px;border-radius:100px;margin-bottom:1.5rem}
+.chip-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 2s infinite}
+.z-h1{font-family:'Unbounded',sans-serif;font-size:clamp(1.8rem,4vw,3rem);font-weight:700;line-height:1.15;
+  background:linear-gradient(135deg,#f0f2f7,#b0bdd4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:1rem}
+.z-h1 em{background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-style:normal}
+.z-sub{color:var(--muted);font-size:.95rem;max-width:540px;margin:0 auto}
+.z-tabs{position:sticky;top:52px;z-index:90;backdrop-filter:blur(20px);background:rgba(10,12,16,0.9);border-bottom:1px solid var(--border);padding:0 2rem}
+.z-tabs-inner{max-width:1000px;margin:0 auto;display:flex;overflow-x:auto;scrollbar-width:none}
+.z-tabs-inner::-webkit-scrollbar{display:none}
+.tab-btn{display:flex;align-items:center;gap:7px;padding:.85rem 1.1rem;font-size:13px;color:var(--muted);background:transparent;border:none;border-bottom:2px solid transparent;cursor:pointer;white-space:nowrap;font-family:'Golos Text',sans-serif;transition:color .2s,border-color .2s}
+.tab-btn:hover{color:var(--text)}
+.tab-btn.active{color:var(--accent);border-bottom-color:var(--accent)}
+.tab-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.z-main{max-width:1000px;margin:0 auto;padding:2rem 2rem 5rem}
+.zpanel{display:none}
+.zpanel.active{display:block}
+.z-sec-label{font-family:'Unbounded',sans-serif;font-size:11px;color:var(--accent);letter-spacing:.12em;margin-bottom:.4rem}
+.z-h2{font-family:'Unbounded',sans-serif;font-size:clamp(1.2rem,2.2vw,1.7rem);font-weight:600;margin-bottom:.4rem}
+.z-sec-sub{color:var(--muted);font-size:14px;margin-bottom:2rem;max-width:600px}
+.card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin-bottom:2.5rem}
+
+/* TCARD */
+.tcard{background:var(--surface);border:1px solid var(--border);border-radius:var(--card-r);overflow:hidden;transition:border-color .25s,transform .25s;cursor:pointer;user-select:none}
+.tcard:hover{border-color:var(--border2);transform:translateY(-2px)}
+.tcard.open{border-color:rgba(79,255,176,0.25);transform:none}
+.tcard-head{padding:1.2rem 1.3rem;display:flex;align-items:flex-start;gap:12px}
+.tcard-icon{width:38px;height:38px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;margin-top:2px}
+.ic-g{background:rgba(79,255,176,0.1)}
+.ic-b{background:rgba(61,224,255,0.1)}
+.ic-r{background:rgba(255,107,107,0.1)}
+.ic-a{background:rgba(255,184,77,0.1)}
+.ic-p{background:rgba(167,139,250,0.1)}
+.tcard-meta{flex:1;min-width:0}
+.tcard-title{font-family:'Unbounded',sans-serif;font-size:13px;font-weight:600;line-height:1.3;margin-bottom:.3rem}
+.tcard-hint{font-size:12px;color:var(--muted);line-height:1.5}
+.tcard-arrow{font-size:18px;color:var(--muted);transition:transform .25s;flex-shrink:0;margin-top:2px;line-height:1}
+.tcard.open .tcard-arrow{transform:rotate(90deg);color:var(--accent)}
+.ztags{display:flex;flex-wrap:wrap;gap:5px;padding:0 1.3rem .9rem}
+.ztag{font-size:10px;font-weight:500;padding:2px 8px;border-radius:100px;border:1px solid}
+.tg{color:var(--accent);border-color:rgba(79,255,176,.3);background:rgba(79,255,176,.06)}
+.tb{color:var(--accent2);border-color:rgba(61,224,255,.3);background:rgba(61,224,255,.06)}
+.tr{color:var(--accent3);border-color:rgba(255,107,107,.3);background:rgba(255,107,107,.06)}
+.ta{color:var(--accent4);border-color:rgba(255,184,77,.3);background:rgba(255,184,77,.06)}
+.tp{color:#a78bfa;border-color:rgba(167,139,250,.3);background:rgba(167,139,250,.06)}
+.drawer{max-height:0;overflow:hidden;transition:max-height .45s cubic-bezier(.4,0,.2,1)}
+.drawer.open{max-height:3000px}
+.drawer-inner{border-top:1px solid var(--border);padding:1.5rem 1.3rem}
+.dsec{margin-bottom:1.4rem}
+.dsec:last-child{margin-bottom:0}
+.dsec-title{font-family:'Unbounded',sans-serif;font-size:11px;font-weight:600;letter-spacing:.1em;color:var(--accent);margin-bottom:.8rem;text-transform:uppercase}
+.dlist{list-style:none}
+.dlist li{display:flex;align-items:flex-start;gap:10px;font-size:13.5px;color:var(--text);padding:6px 0;border-bottom:1px solid var(--border);line-height:1.5}
+.dlist li:last-child{border-bottom:none}
+.dlist li::before{content:'→';color:var(--accent);flex-shrink:0;margin-top:2px;font-size:12px}
+.dlist li b{font-weight:600}
+.dlist li span{color:var(--muted);font-size:12px;display:block;margin-top:2px}
+.warn-box{background:rgba(255,184,77,0.07);border:1px solid rgba(255,184,77,0.2);border-radius:10px;padding:1rem 1.1rem;font-size:13px;color:var(--text);line-height:1.6;margin-top:.75rem}
+.warn-box b{color:var(--accent4)}
+.law-ref{display:inline-flex;align-items:center;gap:5px;font-size:12px;color:var(--accent2);border:1px solid rgba(61,224,255,.25);border-radius:6px;padding:3px 10px;text-decoration:none;margin:.6rem .3rem 0 0;transition:background .2s}
+.law-ref:hover{background:rgba(61,224,255,.08)}
+.dtable{width:100%;border-collapse:collapse;font-size:13px;margin-top:.5rem}
+.dtable th{font-family:'Unbounded',sans-serif;font-size:10px;letter-spacing:.08em;color:var(--muted);font-weight:500;padding:6px 10px;border-bottom:1px solid var(--border);text-align:left}
+.dtable td{padding:8px 10px;border-bottom:1px solid var(--border);color:var(--text);vertical-align:top;line-height:1.5}
+.dtable tr:last-child td{border-bottom:none}
+.dtable tr:hover td{background:rgba(255,255,255,0.02)}
+
+/* QUIZ */
+.quiz-wrap{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:1.2rem;margin-top:.5rem}
+.quiz-q{font-size:14px;font-weight:500;margin-bottom:1rem;line-height:1.5}
+.quiz-opts{display:flex;flex-direction:column;gap:8px}
+.quiz-opt{background:transparent;border:1px solid var(--border);border-radius:8px;padding:.7rem 1rem;font-size:13px;color:var(--text);cursor:pointer;text-align:left;font-family:'Golos Text',sans-serif;transition:border-color .2s,background .2s;line-height:1.4}
+.quiz-opt:hover:not(:disabled){border-color:var(--border2);background:rgba(255,255,255,0.03)}
+.quiz-opt.correct{border-color:rgba(79,255,176,.5)!important;background:rgba(79,255,176,.08)!important;color:var(--accent)!important}
+.quiz-opt.wrong{border-color:rgba(255,107,107,.5)!important;background:rgba(255,107,107,.08)!important;color:var(--accent3)!important}
+.quiz-opt:disabled{cursor:default}
+.quiz-fb{font-size:13px;margin-top:.8rem;padding:.7rem 1rem;border-radius:8px;display:none;line-height:1.5}
+.quiz-fb.show{display:block}
+.quiz-fb.ok{background:rgba(79,255,176,.08);color:var(--accent);border:1px solid rgba(79,255,176,.2)}
+.quiz-fb.bad{background:rgba(255,107,107,.08);color:var(--accent3);border:1px solid rgba(255,107,107,.2)}
+.quiz-next{margin-top:.8rem;background:transparent;border:1px solid var(--border2);border-radius:8px;padding:.6rem 1.2rem;font-size:13px;color:var(--text);cursor:pointer;font-family:'Golos Text',sans-serif;display:none;transition:background .2s}
+.quiz-next:hover{background:rgba(255,255,255,.04)}
+.quiz-next.show{display:inline-block}
+
+@media(max-width:600px){
+  .hero{padding:5rem 1.5rem 3rem}
+  #home-main{padding:0 1.5rem 4rem}
+  #home-nav{padding:0 1rem}
+  .z-hero{padding:4rem 1.5rem 2rem}
+  .z-main{padding:1.5rem 1.5rem 4rem}
+  .z-tabs{padding:0 1rem}
 }
 </style>
 </head>
 <body>
+
+<!-- GLOBAL TOPBAR (shown on sub-pages) -->
+<div id="topbar">
+  <div class="topbar-inner">
+    <button class="back-btn" id="back-btn"><span>←</span> Назад</button>
+    <span class="topbar-sep">/</span>
+    <span class="topbar-title" id="topbar-title"></span>
+  </div>
+</div>
+
+<!-- ==================== PAGE: HOME ==================== -->
+<div class="page active" id="page-home">
 
 <div class="hero">
   <div class="hero-glow glow1"></div>
@@ -301,7 +270,7 @@ footer {
   </div>
 </div>
 
-<nav>
+<nav id="home-nav">
   <div class="nav-inner">
     <a href="#law" class="nav-item"><span class="nav-dot" style="background:#a78bfa"></span>Законы</a>
     <a href="#tech" class="nav-item"><span class="nav-dot" style="background:#3de0ff"></span>Технологии</a>
@@ -313,51 +282,50 @@ footer {
   </div>
 </nav>
 
-<main>
+<div id="home-main">
 
 <!-- ЗАКОНОДАТЕЛЬСТВО -->
 <div class="section fade-in" id="law">
   <div class="section-header">
     <div class="section-num">01 — ЗАКОНОДАТЕЛЬСТВО</div>
     <h2>Нормативная база и регуляторика</h2>
-    <p class="section-sub">Требование обеих вакансий. Без этого нельзя пройти даже первичный скрининг.</p>
+    <p class="section-sub">Требование обеих вакансий. Нажми на карточку — перейдёшь к детальному изучению.</p>
   </div>
   <div class="grid grid-3">
-    <div class="card accent-green">
+    <div class="card accent-green goto" data-goto="zakon" data-tab="fz152">
       <div class="card-icon icon-purple">⚖️</div>
       <div class="card-title">ФЗ-152 «О персональных данных»</div>
       <div class="card-desc">Категории ПД, согласие субъекта, обязанности оператора. Приказ ФСТЭК №21, Приказ ФСБ №378 — технические меры защиты по уровням УЗ-1…4.</div>
       <div class="tags"><span class="tag tag-g">Обязательно</span><span class="tag tag-p">ФЗ</span></div>
+      <div class="goto-arrow">Изучить раздел →</div>
     </div>
-    <div class="card">
+    <div class="card goto" data-goto="zakon" data-tab="fz572">
       <div class="card-icon icon-purple">🏛️</div>
       <div class="card-title">ФЗ-572 «Об экосистемах»</div>
       <div class="card-desc">Требования к цифровым платформам, обработка данных в экосистемах, взаимодействие с ЦБ и Роскомнадзором.</div>
       <div class="tags"><span class="tag tag-g">Обязательно</span><span class="tag tag-p">ФЗ</span></div>
+      <div class="goto-arrow">Изучить раздел →</div>
     </div>
-    <div class="card">
+    <div class="card goto" data-goto="zakon" data-tab="npa">
       <div class="card-icon icon-purple">📋</div>
       <div class="card-title">НПА по защите ПДн</div>
       <div class="card-desc">Приказы ФСТЭК №17, №21, №239. Постановления Правительства 1119, 687. Состав мер по классам защиты. Уведомление РКН.</div>
       <div class="tags"><span class="tag tag-g">Требование</span><span class="tag tag-p">НПА</span></div>
+      <div class="goto-arrow">Изучить раздел →</div>
     </div>
-    <div class="card">
+    <div class="card goto" data-goto="zakon" data-tab="reg">
       <div class="card-icon icon-purple">🏢</div>
       <div class="card-title">Регуляторы: ФСТЭК, ФСБ, РКН</div>
       <div class="card-desc">Зоны ответственности каждого регулятора, порядок проверок, уведомления об инцидентах, взаимодействие в рамках ГосСОПКА.</div>
       <div class="tags"><span class="tag tag-a">Практика</span><span class="tag tag-p">Аудит</span></div>
+      <div class="goto-arrow">Изучить раздел →</div>
     </div>
-    <div class="card">
+    <div class="card goto" data-goto="zakon" data-tab="audit">
       <div class="card-icon icon-purple">🔍</div>
-      <div class="card-title">Внешние аудиторы</div>
-      <div class="card-desc">Порядок прохождения проверок, подготовка документации, взаимодействие со сторонними аудиторами, ответы на запросы регуляторов.</div>
+      <div class="card-title">Внешние аудиторы и ГОСТ</div>
+      <div class="card-desc">Порядок прохождения проверок, подготовка документации, взаимодействие со сторонними аудиторами. ГОСТ Р 57580.</div>
       <div class="tags"><span class="tag tag-a">Практика</span></div>
-    </div>
-    <div class="card">
-      <div class="card-icon icon-purple">📄</div>
-      <div name="card-title" class="card-title">ГОСТ Р 57580</div>
-      <div class="card-desc">Стандарт безопасности финансовых организаций. Полезен как методологическая основа и часто упоминается на собеседованиях.</div>
-      <div class="tags"><span class="tag tag-b">Плюс</span></div>
+      <div class="goto-arrow">Изучить раздел →</div>
     </div>
   </div>
 </div>
@@ -438,7 +406,7 @@ footer {
     <div class="card">
       <div class="card-icon icon-red">🔎</div>
       <div class="card-title">Периодические проверки</div>
-      <div class="card-desc">Аудиты объектов информатизации по чек-листам. Тестирование на проникновение (пентест). Проверка соответствия требованиям. Фиксация нарушений и планы устранения.</div>
+      <div class="card-desc">Аудиты объектов информатизации по чек-листам. Тестирование на проникновение (пентест). Проверка соответствия, фиксация нарушений и планы устранения.</div>
       <div class="tags"><span class="tag tag-a">Контроль</span></div>
     </div>
   </div>
@@ -455,7 +423,7 @@ footer {
     <div class="card accent-amber">
       <div class="card-icon icon-amber">📖</div>
       <div class="card-title">Модель угроз (ФСТЭК 2021)</div>
-      <div class="card-desc">Методика ФСТЭК 2021: активы → нарушители → угрозы → уязвимости → оценка актуальности. БДУ ФСТЭК как база угроз. Обязательно для объектов КИИ и ИСПДн.</div>
+      <div class="card-desc">Методика ФСТЭК 2021: активы → нарушители → угрозы → уязвимости → оценка актуальности. БДУ ФСТЭК как база угроз.</div>
       <div class="tags"><span class="tag tag-g">Обязательно</span><span class="tag tag-a">ФСТЭК</span></div>
     </div>
     <div class="card">
@@ -469,24 +437,6 @@ footer {
       <div class="card-title">BPMN для процессов ИБ<span class="new-badge">новое</span></div>
       <div class="card-desc">Нотация BPMN 2.0 — описание бизнес-процессов обработки данных, потоки информации, точки контроля ИБ. Инструменты: Camunda Modeler, draw.io.</div>
       <div class="tags"><span class="tag tag-b">Методология</span><span class="tag tag-a">Практика</span></div>
-    </div>
-    <div class="card">
-      <div class="card-icon icon-amber">🏗️</div>
-      <div class="card-title">Мероприятия по защите</div>
-      <div class="card-desc">Разработка комплекса мер защиты, roadmap внедрения, контроль исполнения. Организация внутренних аудитов и проверок соответствия.</div>
-      <div class="tags"><span class="tag tag-a">Планирование</span></div>
-    </div>
-    <div class="card">
-      <div class="card-icon icon-amber">🤝</div>
-      <div class="card-title">Взаимодействие с командами</div>
-      <div class="card-desc">Согласование изменений с бизнесом, ИТ и ИБ-подразделениями. Управление стейкхолдерами, консультирование коллег по требованиям ИБ.</div>
-      <div class="tags"><span class="tag tag-b">Soft skills</span></div>
-    </div>
-    <div class="card">
-      <div class="card-icon icon-amber">✅</div>
-      <div class="card-title">Контроль compliance</div>
-      <div class="card-desc">Метрики выполнения требований, отчётность для руководства, работа с отклонениями, планы устранения несоответствий (remediation plan).</div>
-      <div class="tags"><span class="tag tag-a">Контроль</span></div>
     </div>
   </div>
 </div>
@@ -502,26 +452,14 @@ footer {
     <div class="card accent-green">
       <div class="card-icon icon-green">📈</div>
       <div class="card-title">Методологии оценки рисков</div>
-      <div class="card-desc">ISO 27005 — международный стандарт управления рисками ИБ. ГОСТ Р 57580 — для финансового сектора. Идентификация активов, оценка вероятности и ущерба, расчёт уровня риска.</div>
+      <div class="card-desc">ISO 27005 — международный стандарт управления рисками ИБ. ГОСТ Р 57580 — для финансового сектора. Идентификация активов, оценка вероятности и ущерба.</div>
       <div class="tags"><span class="tag tag-g">ISO 27005</span><span class="tag tag-b">ГОСТ 57580</span></div>
     </div>
     <div class="card">
       <div class="card-icon icon-green">🛠️</div>
       <div class="card-title">Меры минимизации рисков</div>
-      <div class="card-desc">Risk treatment plan: принятие, передача, снижение, избегание. Выбор контрмер из каталогов (ISO 27002, ФСТЭК). Оценка остаточного риска. Согласование с бизнесом.</div>
+      <div class="card-desc">Risk treatment plan: принятие, передача, снижение, избегание. Выбор контрмер из каталогов (ISO 27002, ФСТЭК). Оценка остаточного риска.</div>
       <div class="tags"><span class="tag tag-g">Практика</span><span class="tag tag-a">Risk treatment</span></div>
-    </div>
-    <div class="card">
-      <div class="card-icon icon-green">🔄</div>
-      <div class="card-title">Проекты внедрения политик</div>
-      <div class="card-desc">Планирование проекта, roadmap, KPI внедрения. Управление изменениями (change management). Метрики успеха. Обучение персонала.</div>
-      <div class="tags"><span class="tag tag-b">PM</span><span class="tag tag-a">Практика</span></div>
-    </div>
-    <div class="card">
-      <div class="card-icon icon-green">🧩</div>
-      <div class="card-title">Риски SaaS и облачных сред</div>
-      <div class="card-desc">Специфика рисков в облачной инфраструктуре: shared responsibility model, data residency, API security, misconfiguration, третьи стороны.</div>
-      <div class="tags"><span class="tag tag-b">Cloud</span></div>
     </div>
   </div>
 </div>
@@ -533,64 +471,13 @@ footer {
     <h2>Квалификация и документальное подтверждение</h2>
     <p class="section-sub">Вторая вакансия требует профильное образование или переподготовку от 500 часов.</p>
   </div>
-
-  <div class="card accent-green" style="margin-bottom:1.5rem">
-    <div class="card-icon icon-green">🎓</div>
-    <div class="card-title">Требование к образованию</div>
-    <div class="card-desc" style="margin-bottom:1rem">Профильный диплом по специальностям 10.03.01, 10.05.01 и аналогичным — <strong>ИЛИ</strong> высшее образование любого профиля + переподготовка по ИБ от <strong>500 аудиторных часов</strong>.</div>
-    <div class="card-desc">Программы: МТУСИ, РГГУ, ГУУ, Академия ФСБ, АНО ДПО «Инфозащита» — выдают диплом о профессиональной переподготовке государственного образца.</div>
-    <div class="tags"><span class="tag tag-r">Обязательно для вакансии 2</span></div>
-  </div>
-
   <div class="cert-grid">
-    <div class="cert-card">
-      <div class="cert-icon">🌐</div>
-      <div>
-        <div class="cert-name">CISSP</div>
-        <div class="cert-sub">ISC² — самый престижный международный</div>
-        <div class="cert-level lvl-plus">+ к резюме</div>
-      </div>
-    </div>
-    <div class="cert-card">
-      <div class="cert-icon">📊</div>
-      <div>
-        <div class="cert-name">CISM</div>
-        <div class="cert-sub">ISACA — управление ИБ</div>
-        <div class="cert-level lvl-plus">+ к резюме</div>
-      </div>
-    </div>
-    <div class="cert-card">
-      <div class="cert-icon">⚔️</div>
-      <div>
-        <div class="cert-name">CEH</div>
-        <div class="cert-sub">EC-Council — этичный хакинг</div>
-        <div class="cert-level lvl-plus">+ к резюме</div>
-      </div>
-    </div>
-    <div class="cert-card">
-      <div class="cert-icon">🔰</div>
-      <div>
-        <div class="cert-name">Security+</div>
-        <div class="cert-sub">CompTIA — базовый уровень</div>
-        <div class="cert-level lvl-plus">Хорошее начало</div>
-      </div>
-    </div>
-    <div class="cert-card">
-      <div class="cert-icon">🏛️</div>
-      <div>
-        <div class="cert-name">Специалист ФСТЭК</div>
-        <div class="cert-sub">Защита ПДн и КИИ</div>
-        <div class="cert-level lvl-must">Важно для РФ</div>
-      </div>
-    </div>
-    <div class="cert-card">
-      <div class="cert-icon">🟢</div>
-      <div>
-        <div class="cert-name">Kaspersky / PT</div>
-        <div class="cert-sub">Вендорские курсы по СЗИ</div>
-        <div class="cert-level lvl-must">Практично</div>
-      </div>
-    </div>
+    <div class="cert-card"><div class="cert-icon">🌐</div><div><div class="cert-name">CISSP</div><div class="cert-sub">ISC² — самый престижный международный</div><div class="cert-level lvl-plus">+ к резюме</div></div></div>
+    <div class="cert-card"><div class="cert-icon">📊</div><div><div class="cert-name">CISM</div><div class="cert-sub">ISACA — управление ИБ</div><div class="cert-level lvl-plus">+ к резюме</div></div></div>
+    <div class="cert-card"><div class="cert-icon">⚔️</div><div><div class="cert-name">CEH</div><div class="cert-sub">EC-Council — этичный хакинг</div><div class="cert-level lvl-plus">+ к резюме</div></div></div>
+    <div class="cert-card"><div class="cert-icon">🔰</div><div><div class="cert-name">Security+</div><div class="cert-sub">CompTIA — базовый уровень</div><div class="cert-level lvl-plus">Хорошее начало</div></div></div>
+    <div class="cert-card"><div class="cert-icon">🏛️</div><div><div class="cert-name">Специалист ФСТЭК</div><div class="cert-sub">Защита ПДн и КИИ</div><div class="cert-level lvl-must">Важно для РФ</div></div></div>
+    <div class="cert-card"><div class="cert-icon">🟢</div><div><div class="cert-name">Kaspersky / PT</div><div class="cert-sub">Вендорские курсы по СЗИ</div><div class="cert-level lvl-must">Практично</div></div></div>
   </div>
 </div>
 
@@ -604,128 +491,537 @@ footer {
   <div class="grid grid-2">
     <div>
       <div class="timeline">
-        <div class="tl-item">
-          <div class="tl-dot"></div>
-          <div class="tl-week">НЕДЕЛЯ 1–2</div>
-          <div class="tl-title">Законодательная база</div>
-          <ul class="tl-tasks">
-            <li>Полное прочтение ФЗ-152 с комментариями</li>
-            <li>Изучить ФЗ-572 и его требования к платформам</li>
-            <li>Приказы ФСТЭК №21, №17, №239</li>
-            <li>Постановления Правительства 1119, 687</li>
-            <li>Роли регуляторов: ФСТЭК, ФСБ, РКН, ЦБ</li>
-          </ul>
-        </div>
-        <div class="tl-item">
-          <div class="tl-dot"></div>
-          <div class="tl-week">НЕДЕЛЯ 3</div>
-          <div class="tl-title">Модель угроз и ОРД</div>
-          <ul class="tl-tasks">
-            <li>Методика моделирования угроз ФСТЭК 2021</li>
-            <li>Работа с БДУ ФСТЭК</li>
-            <li>Написание учебной модели угроз</li>
-            <li>Структура политики ИБ — написать образец</li>
-          </ul>
-        </div>
-        <div class="tl-item">
-          <div class="tl-dot"></div>
-          <div class="tl-week">НЕДЕЛЯ 4</div>
-          <div class="tl-title">Технические СЗИ</div>
-          <ul class="tl-tasks">
-            <li>Архитектура и настройка DLP-систем</li>
-            <li>NGFW: правила, политики, сегментация</li>
-            <li>Обзор SIEM, IAM, PAM — сценарии применения</li>
-            <li>MITRE ATT&CK: разобрать 10 техник</li>
-          </ul>
-        </div>
-        <div class="tl-item">
-          <div class="tl-dot"></div>
-          <div class="tl-week">НЕДЕЛЯ 5</div>
-          <div class="tl-title">Инциденты и SOC</div>
-          <ul class="tl-tasks">
-            <li>NIST SP 800-61 — жизненный цикл инцидента</li>
-            <li>Написание шаблона отчёта об инциденте</li>
-            <li>Форензика: Wireshark, анализ логов</li>
-            <li>Уведомление ГосСОПКА — порядок и сроки</li>
-          </ul>
-        </div>
+        <div class="tl-item"><div class="tl-dot"></div><div class="tl-week">НЕДЕЛЯ 1–2</div><div class="tl-title">Законодательная база</div><ul class="tl-tasks"><li>Полное прочтение ФЗ-152 с комментариями</li><li>Изучить ФЗ-572 и его требования к платформам</li><li>Приказы ФСТЭК №21, №17, №239</li><li>Постановления Правительства 1119, 687</li><li>Роли регуляторов: ФСТЭК, ФСБ, РКН, ЦБ</li></ul></div>
+        <div class="tl-item"><div class="tl-dot"></div><div class="tl-week">НЕДЕЛЯ 3</div><div class="tl-title">Модель угроз и ОРД</div><ul class="tl-tasks"><li>Методика моделирования угроз ФСТЭК 2021</li><li>Работа с БДУ ФСТЭК</li><li>Написание учебной модели угроз</li><li>Структура политики ИБ — написать образец</li></ul></div>
+        <div class="tl-item"><div class="tl-dot"></div><div class="tl-week">НЕДЕЛЯ 4</div><div class="tl-title">Технические СЗИ</div><ul class="tl-tasks"><li>Архитектура и настройка DLP-систем</li><li>NGFW: правила, политики, сегментация</li><li>Обзор SIEM, IAM, PAM — сценарии применения</li><li>MITRE ATT&amp;CK: разобрать 10 техник</li></ul></div>
+        <div class="tl-item"><div class="tl-dot"></div><div class="tl-week">НЕДЕЛЯ 5</div><div class="tl-title">Инциденты и SOC</div><ul class="tl-tasks"><li>NIST SP 800-61 — жизненный цикл инцидента</li><li>Написание шаблона отчёта об инциденте</li><li>Форензика: Wireshark, анализ логов</li><li>Уведомление ГосСОПКА — порядок и сроки</li></ul></div>
       </div>
     </div>
     <div>
       <div class="timeline">
-        <div class="tl-item">
-          <div class="tl-dot"></div>
-          <div class="tl-week">НЕДЕЛЯ 6</div>
-          <div class="tl-title">Управление рисками</div>
-          <ul class="tl-tasks">
-            <li>ISO 27005 — методология оценки рисков</li>
-            <li>Построить реестр рисков для учебного проекта</li>
-            <li>Risk treatment plan — оформить меры</li>
-            <li>ГОСТ Р 57580 — обзор требований</li>
-          </ul>
-        </div>
-        <div class="tl-item">
-          <div class="tl-dot"></div>
-          <div class="tl-week">НЕДЕЛЯ 7</div>
-          <div class="tl-title">BPMN и процессы</div>
-          <ul class="tl-tasks">
-            <li>Основы нотации BPMN 2.0</li>
-            <li>Описать процесс обработки ПДн в BPMN</li>
-            <li>Описать процесс реагирования на инциденты</li>
-            <li>Инструменты: draw.io или Camunda Modeler</li>
-          </ul>
-        </div>
-        <div class="tl-item">
-          <div class="tl-dot"></div>
-          <div class="tl-week">НЕДЕЛЯ 8</div>
-          <div class="tl-title">Подготовка к интервью</div>
-          <ul class="tl-tasks">
-            <li>Подготовить портфолио документов (политика, модель угроз, отчёт)</li>
-            <li>Повторить топ-20 вопросов на собеседовании по ИБ</li>
-            <li>Изучить сертификаты: Security+, CEH как приоритет</li>
-            <li>Провести mock-интервью, отработать кейсы</li>
-          </ul>
-        </div>
-        <div class="tl-item">
-          <div class="tl-dot"></div>
-          <div class="tl-week">ПАРАЛЛЕЛЬНО</div>
-          <div class="tl-title">Практика и нетворкинг</div>
-          <ul class="tl-tasks">
-            <li>CTF-соревнования (HackTheBox, Standoff 365)</li>
-            <li>Telegram-каналы: @sec_news, @ptsecurity, @cyberrus</li>
-            <li>Проверить наличие / записаться на переподготовку 500ч</li>
-          </ul>
-        </div>
+        <div class="tl-item"><div class="tl-dot"></div><div class="tl-week">НЕДЕЛЯ 6</div><div class="tl-title">Управление рисками</div><ul class="tl-tasks"><li>ISO 27005 — методология оценки рисков</li><li>Построить реестр рисков для учебного проекта</li><li>Risk treatment plan — оформить меры</li><li>ГОСТ Р 57580 — обзор требований</li></ul></div>
+        <div class="tl-item"><div class="tl-dot"></div><div class="tl-week">НЕДЕЛЯ 7</div><div class="tl-title">BPMN и процессы</div><ul class="tl-tasks"><li>Основы нотации BPMN 2.0</li><li>Описать процесс обработки ПДн в BPMN</li><li>Описать процесс реагирования на инциденты</li><li>Инструменты: draw.io или Camunda Modeler</li></ul></div>
+        <div class="tl-item"><div class="tl-dot"></div><div class="tl-week">НЕДЕЛЯ 8</div><div class="tl-title">Подготовка к интервью</div><ul class="tl-tasks"><li>Портфолио документов (политика, модель угроз, отчёт)</li><li>Повторить топ-20 вопросов на собеседовании</li><li>Изучить сертификаты: Security+, CEH</li><li>Провести mock-интервью, отработать кейсы</li></ul></div>
+        <div class="tl-item"><div class="tl-dot"></div><div class="tl-week">ПАРАЛЛЕЛЬНО</div><div class="tl-title">Практика и нетворкинг</div><ul class="tl-tasks"><li>CTF-соревнования (HackTheBox, Standoff 365)</li><li>Telegram-каналы: @sec_news, @ptsecurity</li><li>Проверить / записаться на переподготовку 500ч</li></ul></div>
       </div>
     </div>
   </div>
 </div>
 
-</main>
+</div><!-- /home-main -->
+<footer><p>Дорожная карта специалиста по информационной безопасности · 2025</p></footer>
+</div><!-- /page-home -->
 
-<footer>
-  <p>Дорожная карта специалиста по информационной безопасности · 2025</p>
-  <p style="margin-top:.5rem; color:#3e4560; font-size:11px">Составлено на основе двух реальных вакансий</p>
-</footer>
+
+<!-- ==================== PAGE: ЗАКОНОДАТЕЛЬСТВО ==================== -->
+<div class="page" id="page-zakon">
+
+<div class="z-hero">
+  <div class="z-glow zg1"></div>
+  <div class="z-glow zg2"></div>
+  <div class="z-hero-inner">
+    <div class="chip"><span class="chip-dot"></span>01 — Законодательство по ИБ</div>
+    <div class="z-h1">Нормативная база<br><em>для специалиста по ИБ</em></div>
+    <p class="z-sub">Реальный контент из КонсультантПлюс и ФСТЭК. Открывай карточку — читай только нужное.</p>
+  </div>
+</div>
+
+<div class="z-tabs" id="z-tabs">
+  <div class="z-tabs-inner" id="z-tabs-inner">
+    <button class="tab-btn active" data-ztab="fz152"><span class="tab-dot" style="background:#a78bfa"></span>ФЗ-152</button>
+    <button class="tab-btn" data-ztab="fz572"><span class="tab-dot" style="background:#3de0ff"></span>ФЗ-572</button>
+    <button class="tab-btn" data-ztab="npa"><span class="tab-dot" style="background:#ffb84d"></span>НПА и приказы</button>
+    <button class="tab-btn" data-ztab="reg"><span class="tab-dot" style="background:#ff6b6b"></span>Регуляторы</button>
+    <button class="tab-btn" data-ztab="audit"><span class="tab-dot" style="background:#4fffb0"></span>Аудит и ГОСТ</button>
+  </div>
+</div>
+
+<div class="z-main">
+
+<!-- ФЗ-152 -->
+<div class="zpanel active" id="zpanel-fz152">
+  <div class="z-sec-label">ТЕМА 1</div>
+  <div class="z-h2">ФЗ-152 «О персональных данных»</div>
+  <p class="z-sec-sub">Главный закон для любого специалиста по ИБ. Последняя редакция — 24.06.2025.</p>
+  <div class="card-grid" id="grid-fz152">
+    <div class="tcard"><div class="tcard-head"><div class="tcard-icon ic-p">📖</div><div class="tcard-meta"><div class="tcard-title">Основные понятия (ст. 3)</div><div class="tcard-hint">Оператор, ПДн, обработка, обезличивание</div></div><div class="tcard-arrow">›</div></div><div class="ztags"><span class="ztag tg">Ст. 3 ФЗ-152</span><span class="ztag tp">Базово</span></div>
+    <div class="drawer"><div class="drawer-inner">
+      <div class="dsec"><div class="dsec-title">Что такое персональные данные</div><ul class="dlist">
+        <li><b>ПДн</b> — любая информация, относящаяся к прямо или косвенно определённому физлицу. ФИО, адрес, email, IP, биометрия, СНИЛС, ИНН — всё ПДн.</li>
+        <li><b>Оператор</b> — организация или ИП, которая определяет цели обработки и состав ПДн.<span>Любая компания, собирающая данные сотрудников или клиентов = оператор.</span></li>
+        <li><b>Обработка ПДн</b> — любое действие: сбор, запись, хранение, уточнение, извлечение, использование, передача, обезличивание, блокирование, уничтожение.</li>
+        <li><b>Обезличивание</b> — действия, после которых без доп. информации невозможно определить принадлежность данных субъекту.</li>
+        <li><b>Блокирование</b> — временное прекращение обработки (не уничтожение!). При спорах о достоверности.</li>
+        <li><b>Трансграничная передача</b> — передача ПДн на территорию иностранного государства. Требует отдельного основания.</li>
+      </ul></div>
+      <div class="dsec"><div class="dsec-title">Категории персональных данных (ст. 10–11)</div>
+      <table class="dtable"><tr><th>Категория</th><th>Что включает</th><th>Особенность</th></tr>
+        <tr><td>Специальные</td><td>Раса, религия, здоровье, интимная жизнь, политвзгляды</td><td>Запрещено без письменного согласия или закона</td></tr>
+        <tr><td>Биометрические</td><td>Отпечатки, лицо, ДНК, голос</td><td>Только с письменного согласия или по закону</td></tr>
+        <tr><td>Для распространения</td><td>Открытые ПДн, предоставленные субъектом публично</td><td>С 2021 г. — особый порядок согласия</td></tr>
+        <tr><td>Иные (общие)</td><td>ФИО, дата рождения, контакты, должность</td><td>Базовый режим защиты</td></tr>
+      </table></div>
+      <a class="law-ref" href="https://www.consultant.ru/document/cons_doc_LAW_61801/4f41fe599ce341751e4e34dc50a4b676674c1416/" target="_blank">📄 Ст. 3 на КонсультантПлюс</a>
+      <a class="law-ref" href="https://www.consultant.ru/document/cons_doc_LAW_61801/26edb2934b899bf9c74c3a8f7e574651c6565e6d/" target="_blank">📄 Ст. 10 на КонсультантПлюс</a>
+    </div></div></div>
+
+    <div class="tcard"><div class="tcard-head"><div class="tcard-icon ic-g">⚖️</div><div class="tcard-meta"><div class="tcard-title">Принципы обработки (ст. 5)</div><div class="tcard-hint">7 принципов, которые нужно знать наизусть</div></div><div class="tcard-arrow">›</div></div><div class="ztags"><span class="ztag tg">Ст. 5 ФЗ-152</span><span class="ztag tg">Обязательно</span></div>
+    <div class="drawer"><div class="drawer-inner">
+      <div class="dsec"><div class="dsec-title">7 принципов из ст. 5</div><ul class="dlist">
+        <li><b>1. Законность и справедливость</b> — обработка должна иметь законное основание.</li>
+        <li><b>2. Конкретность целей</b> — цели определяются до начала обработки. Нельзя обрабатывать «на всякий случай».</li>
+        <li><b>3. Несовместимость баз</b> — нельзя объединять базы ПДн с несовместимыми целями.</li>
+        <li><b>4. Соответствие целям</b> — обрабатывать только данные, нужные для заявленной цели.</li>
+        <li><b>5. Минимизация</b> — объём ПДн не должен быть избыточным.</li>
+        <li><b>6. Точность</b> — оператор обязан обеспечивать актуальность данных, удалять неточные.</li>
+        <li><b>7. Ограничение хранения</b> — хранить не дольше, чем требует цель. После — уничтожить или обезличить.</li>
+      </ul></div>
+      <div class="warn-box">⚠️ <b>На собеседовании:</b> «Какие принципы обработки ПДн вы знаете?» — нужно назвать все 7 и объяснить каждый на примере.</div>
+      <a class="law-ref" href="https://www.consultant.ru/document/cons_doc_LAW_61801/96fbc469f91f57235cc842a85e0516a99f23dc85/" target="_blank">📄 Ст. 5 на КонсультантПлюс</a>
+    </div></div></div>
+
+    <div class="tcard"><div class="tcard-head"><div class="tcard-icon ic-b">✍️</div><div class="tcard-meta"><div class="tcard-title">Согласие субъекта (ст. 9)</div><div class="tcard-hint">Содержание, письменная форма, отзыв</div></div><div class="tcard-arrow">›</div></div><div class="ztags"><span class="ztag tb">Ст. 9 ФЗ-152</span><span class="ztag tg">Практика</span></div>
+    <div class="drawer"><div class="drawer-inner">
+      <div class="dsec"><div class="dsec-title">Требования к согласию</div><ul class="dlist">
+        <li><b>5 характеристик:</b> конкретное, предметное, информированное, сознательное, однозначное.</li>
+        <li><b>Свободно, своей волей</b> — нельзя принуждать как условие договора (с 2022 г. прямо запрещено).</li>
+        <li><b>Оформляется отдельно</b> от других документов — нельзя зашивать в договор мелким шрифтом.</li>
+        <li><b>Доказать наличие согласия</b> обязан оператор — нужно хранить все согласия.</li>
+      </ul></div>
+      <div class="dsec"><div class="dsec-title">Обязательные реквизиты письменного согласия (ч. 4 ст. 9)</div><ul class="dlist">
+        <li>ФИО, адрес, паспортные данные субъекта</li>
+        <li>Наименование и адрес оператора</li>
+        <li>Цель обработки персональных данных</li>
+        <li>Перечень ПДн и перечень действий с ними</li>
+        <li>Срок действия согласия и способ его отзыва</li>
+        <li>Подпись субъекта</li>
+      </ul></div>
+      <div class="dsec"><div class="dsec-title">Когда можно без согласия (ст. 6)</div><ul class="dlist">
+        <li>Для исполнения договора с субъектом</li>
+        <li>По требованию закона или для выполнения госфункций</li>
+        <li>Для защиты жизни или здоровья</li>
+        <li>В судебном или исполнительном производстве</li>
+      </ul></div>
+      <a class="law-ref" href="https://www.consultant.ru/document/cons_doc_LAW_61801/6c94959bc017ac80140621762d2ac59f6006b08c/" target="_blank">📄 Ст. 9 на КонсультантПлюс</a>
+    </div></div></div>
+
+    <div class="tcard"><div class="tcard-head"><div class="tcard-icon ic-r">🔒</div><div class="tcard-meta"><div class="tcard-title">Меры безопасности ПДн (ст. 19)</div><div class="tcard-hint">Обязанности оператора, уровни защищённости</div></div><div class="tcard-arrow">›</div></div><div class="ztags"><span class="ztag tr">Ст. 19 ФЗ-152</span><span class="ztag tg">Обязательно</span></div>
+    <div class="drawer"><div class="drawer-inner">
+      <div class="dsec"><div class="dsec-title">Обязанности оператора</div><ul class="dlist">
+        <li><b>Назначить ответственного</b> — лицо за организацию обработки ПДн (ст. 22.1).</li>
+        <li><b>Уведомить РКН</b> до начала обработки (ст. 22) — зарегистрироваться как оператор.</li>
+        <li><b>Технические меры</b> — Приказ ФСТЭК №21 (орг. и техн.) и Приказ ФСБ №378 (СКЗИ).</li>
+        <li><b>Уведомление об инциденте</b> — 24 часа (первичное в РКН), 72 часа (результаты расследования).</li>
+        <li><b>Локализация</b> — ПДн граждан РФ хранятся на серверах в РФ (ст. 18.1).</li>
+      </ul></div>
+      <div class="dsec"><div class="dsec-title">Уровни защищённости ИСПДн (ПП №1119)</div>
+      <table class="dtable"><tr><th>Уровень</th><th>Условие</th></tr>
+        <tr><td>УЗ-4 (базовый)</td><td>Иные ПДн, до 100 000 субъектов, сотрудники</td></tr>
+        <tr><td>УЗ-3</td><td>Иные ПДн более 100 000, или спецкатегории до 100 000</td></tr>
+        <tr><td>УЗ-2</td><td>Спецкатегории более 100 000, биометрия, угрозы 2 типа</td></tr>
+        <tr><td>УЗ-1 (высший)</td><td>Угрозы 1 типа (НДВ в системном ПО)</td></tr>
+      </table></div>
+      <a class="law-ref" href="https://www.consultant.ru/document/cons_doc_LAW_146520/" target="_blank">📄 Приказ ФСТЭК №21</a>
+    </div></div></div>
+
+    <div class="tcard"><div class="tcard-head"><div class="tcard-icon ic-a">👤</div><div class="tcard-meta"><div class="tcard-title">Права субъекта ПДн (гл. 3)</div><div class="tcard-hint">На что имеет право человек, чьи данные обрабатываются</div></div><div class="tcard-arrow">›</div></div><div class="ztags"><span class="ztag ta">Гл. 3 ФЗ-152</span></div>
+    <div class="drawer"><div class="drawer-inner">
+      <div class="dsec"><div class="dsec-title">Основные права субъекта</div><ul class="dlist">
+        <li><b>Право на информацию</b> — знать, кто, зачем и как обрабатывает его ПДн (ст. 14).</li>
+        <li><b>Право на доступ</b> — получить копию своих ПДн бесплатно.</li>
+        <li><b>Право на уточнение</b> — потребовать исправить неточные данные.</li>
+        <li><b>Право на удаление</b> — потребовать прекратить обработку или уничтожить данные.</li>
+        <li><b>Право отозвать согласие</b> — в любой момент.</li>
+        <li><b>Право на обжалование</b> — обратиться в РКН или суд (ст. 17).</li>
+      </ul></div>
+      <div class="warn-box">⚠️ <b>Важно:</b> ответить на запрос субъекта — в течение <b>10 рабочих дней</b>. С 2024 г. штрафы за нарушение существенно выросли.</div>
+    </div></div></div>
+
+    <div class="tcard"><div class="tcard-head"><div class="tcard-icon ic-r">💸</div><div class="tcard-meta"><div class="tcard-title">Ответственность и штрафы</div><div class="tcard-hint">Санкции 2024–2025 за нарушение ФЗ-152</div></div><div class="tcard-arrow">›</div></div><div class="ztags"><span class="ztag tr">КоАП РФ</span><span class="ztag ta">2024–2025</span></div>
+    <div class="drawer"><div class="drawer-inner">
+      <div class="dsec"><div class="dsec-title">Санкции по ФЗ-233 от 08.08.2024</div>
+      <table class="dtable"><tr><th>Нарушение</th><th>Штраф для юрлица</th></tr>
+        <tr><td>Обработка без согласия</td><td>до 700 000 руб.</td></tr>
+        <tr><td>Без уведомления РКН</td><td>до 100 000 руб.</td></tr>
+        <tr><td>Нарушение требований к согласию</td><td>до 700 000 руб.</td></tr>
+        <tr><td>Утечка ПДн (до 1 000 субъектов)</td><td>до 3 000 000 руб.</td></tr>
+        <tr><td>Утечка ПДн (от 10 000 субъектов)</td><td>до 15 000 000 руб.</td></tr>
+        <tr><td>Утечка спецкатегорий ПДн</td><td>до 20 000 000 руб.</td></tr>
+        <tr><td>Нелокализация ПДн</td><td>до 18 000 000 руб.</td></tr>
+      </table></div>
+    </div></div></div>
+  </div>
+
+  <div class="dsec"><div class="dsec-title" style="margin-bottom:1rem">🧠 Проверь себя — тест по ФЗ-152</div><div id="quiz-container"></div></div>
+</div><!-- /zpanel-fz152 -->
+
+<!-- ФЗ-572 -->
+<div class="zpanel" id="zpanel-fz572">
+  <div class="z-sec-label">ТЕМА 2</div>
+  <div class="z-h2">ФЗ-572 «Об экосистемах»</div>
+  <p class="z-sec-sub">Закон о цифровых платформах. Важен для финтеха, маркетплейсов и экосистем банков.</p>
+  <div class="card-grid">
+    <div class="tcard"><div class="tcard-head"><div class="tcard-icon ic-b">🌐</div><div class="tcard-meta"><div class="tcard-title">Что регулирует ФЗ-572?</div><div class="tcard-hint">Сфера применения, кто подпадает под закон</div></div><div class="tcard-arrow">›</div></div><div class="ztags"><span class="ztag tb">ФЗ-572</span><span class="ztag tg">Базово</span></div>
+    <div class="drawer"><div class="drawer-inner">
+      <div class="dsec"><div class="dsec-title">Сфера применения</div><ul class="dlist">
+        <li><b>Цифровые платформы</b> — маркетплейсы, агрегаторы, соцсети, экосистемы банков (Яндекс, Сбер, ВТБ, МТС).</li>
+        <li><b>Цель закона</b> — предотвратить монополизацию рынка, защитить пользователей и конкуренцию.</li>
+        <li><b>Разграничение данных</b> — платформа обязана обеспечить раздельное хранение данных разных бизнесов.</li>
+        <li><b>Запрет на дискриминацию</b> — нельзя использовать данные одного сервиса для преимущества другого.</li>
+        <li><b>Уведомление РКН</b> — крупные платформы отчитываются об обработке ПДн в расширенном режиме.</li>
+      </ul></div>
+      <div class="warn-box">⚠️ <b>Практически:</b> работаешь в финтехе или маркетплейсе — ФЗ-572 напрямую влияет на архитектуру защиты данных и разграничение доступа.</div>
+    </div></div></div>
+
+    <div class="tcard"><div class="tcard-head"><div class="tcard-icon ic-b">🏦</div><div class="tcard-meta"><div class="tcard-title">Связь с ЦБ РФ</div><div class="tcard-hint">Как ФЗ-572 пересекается с банковским регулированием</div></div><div class="tcard-arrow">›</div></div><div class="ztags"><span class="ztag tb">ЦБ РФ</span><span class="ztag ta">Финтех</span></div>
+    <div class="drawer"><div class="drawer-inner">
+      <div class="dsec"><div class="dsec-title">Требования ЦБ для финансовых экосистем</div><ul class="dlist">
+        <li><b>Положение ЦБ №683-П</b> — требования к кредитным организациям по защите информации (ГОСТ Р 57580.1).</li>
+        <li><b>Положение ЦБ №757-П</b> — операционная надёжность. Уведомление ЦБ об инциденте в течение 2 часов.</li>
+        <li><b>AML-требования</b> — системы мониторинга транзакций, передача данных в Росфинмониторинг.</li>
+        <li><b>Open API</b> — требования к безопасности при предоставлении API-доступа партнёрам.</li>
+      </ul></div>
+    </div></div></div>
+
+    <div class="tcard"><div class="tcard-head"><div class="tcard-icon ic-g">☁️</div><div class="tcard-meta"><div class="tcard-title">Требования к SaaS-решениям</div><div class="tcard-hint">Специфика ИБ для облачных платформ</div></div><div class="tcard-arrow">›</div></div><div class="ztags"><span class="ztag tg">SaaS</span><span class="ztag tb">Облако</span></div>
+    <div class="drawer"><div class="drawer-inner">
+      <div class="dsec"><div class="dsec-title">Ключевые требования ИБ для SaaS</div><ul class="dlist">
+        <li><b>Shared Responsibility Model</b> — за физ. инфраструктуру отвечает провайдер, за данные и доступ — клиент.</li>
+        <li><b>Локализация</b> — ПДн граждан РФ должны обрабатываться на серверах в РФ.</li>
+        <li><b>SLA по безопасности</b> — договор должен включать требования к защите и уведомлению об инцидентах.</li>
+        <li><b>CASB</b> — контроль доступа к облачным сервисам, выявление shadow IT.</li>
+        <li><b>Оценка третьих сторон</b> — перед подключением SaaS — оценка рисков поставщика.</li>
+      </ul></div>
+    </div></div></div>
+  </div>
+</div><!-- /zpanel-fz572 -->
+
+<!-- НПА -->
+<div class="zpanel" id="zpanel-npa">
+  <div class="z-sec-label">ТЕМА 3</div>
+  <div class="z-h2">НПА: Приказы ФСТЭК и Постановления Правительства</div>
+  <p class="z-sec-sub">Технические требования к защите информации. Без них невозможно написать модель угроз или разработать ОРД.</p>
+  <div class="card-grid">
+    <div class="tcard"><div class="tcard-head"><div class="tcard-icon ic-p">🛡️</div><div class="tcard-meta"><div class="tcard-title">Приказ ФСТЭК №21 — ИСПДн</div><div class="tcard-hint">15 групп мер по защите ПДн, порядок применения</div></div><div class="tcard-arrow">›</div></div><div class="ztags"><span class="ztag tp">ФСТЭК №21</span><span class="ztag tg">Обязательно</span></div>
+    <div class="drawer"><div class="drawer-inner">
+      <div class="dsec"><div class="dsec-title">15 групп мер (аббревиатуры)</div><ul class="dlist">
+        <li><b>ИАФ</b> — идентификация и аутентификация</li>
+        <li><b>УПД</b> — управление правами доступа</li>
+        <li><b>ОПС</b> — ограничение программной среды</li>
+        <li><b>ЗНИ</b> — защита машинных носителей информации</li>
+        <li><b>РСБ</b> — регистрация событий безопасности</li>
+        <li><b>АВЗ</b> — антивирусная защита</li>
+        <li><b>СОВ</b> — обнаружение (предотвращение) вторжений</li>
+        <li><b>АНЗ</b> — анализ защищённости (контроль уязвимостей)</li>
+        <li><b>ОЦЛ</b> — обеспечение целостности</li>
+        <li><b>ОДТ</b> — обеспечение доступности</li>
+        <li><b>ЗСВ</b> — защита среды виртуализации</li>
+        <li><b>ЗТС</b> — защита технических средств</li>
+        <li><b>ЗИС</b> — защита информационной системы</li>
+        <li><b>ИНЦ</b> — реагирование на инциденты</li>
+        <li><b>УКФ</b> — управление конфигурацией</li>
+      </ul></div>
+      <div class="dsec"><div class="dsec-title">Классы СЗИ по уровням УЗ</div>
+      <table class="dtable"><tr><th>Уровень</th><th>Класс СЗИ (мин.)</th><th>Уровень доверия</th></tr>
+        <tr><td>УЗ-1</td><td>4 класс</td><td>4 уровень</td></tr>
+        <tr><td>УЗ-2</td><td>5 класс</td><td>5 уровень</td></tr>
+        <tr><td>УЗ-3</td><td>6 класс</td><td>6 уровень</td></tr>
+        <tr><td>УЗ-4</td><td>6 класс</td><td>не установлен</td></tr>
+      </table></div>
+      <div class="dsec"><div class="dsec-title">4 шага выбора мер</div><ul class="dlist">
+        <li><b>Шаг 1 — Базовый набор:</b> по приложению к приказу для своего УЗ.</li>
+        <li><b>Шаг 2 — Адаптация:</b> исключить неприменимые меры.</li>
+        <li><b>Шаг 3 — Уточнение:</b> добавить меры под конкретные угрозы.</li>
+        <li><b>Шаг 4 — Дополнение:</b> добавить меры из других НПА. Оценка — раз в 3 года.</li>
+      </ul></div>
+      <a class="law-ref" href="https://www.consultant.ru/document/cons_doc_LAW_146520/" target="_blank">📄 Приказ №21 на КонсультантПлюс</a>
+    </div></div></div>
+
+    <div class="tcard"><div class="tcard-head"><div class="tcard-icon ic-p">🔐</div><div class="tcard-meta"><div class="tcard-title">Приказ ФСБ №378 — СКЗИ</div><div class="tcard-hint">Криптографические меры защиты ПДн</div></div><div class="tcard-arrow">›</div></div><div class="ztags"><span class="ztag tp">ФСБ №378</span><span class="ztag tb">Крипто</span></div>
+    <div class="drawer"><div class="drawer-inner">
+      <div class="dsec"><div class="dsec-title">Суть и применение</div><ul class="dlist">
+        <li><b>Назначение</b> — меры защиты ПДн с использованием СКЗИ.</li>
+        <li><b>Когда применяется</b> — передача ПДн по интернету, хранение на зашифрованных носителях, удалённый доступ к ИСПДн.</li>
+        <li><b>Классы СКЗИ:</b> КС1 → КС2 → КС3 → КВ → КА. Чем выше класс, тем серьёзнее модель нарушителя.</li>
+        <li><b>ФСТЭК</b> — организационные меры (кроме крипто). <b>ФСБ</b> — криптографические меры. Оба документа применяются одновременно.</li>
+      </ul></div>
+    </div></div></div>
+
+    <div class="tcard"><div class="tcard-head"><div class="tcard-icon ic-a">📜</div><div class="tcard-meta"><div class="tcard-title">Постановление Правительства №1119</div><div class="tcard-hint">Как определить уровень защищённости ИСПДн</div></div><div class="tcard-arrow">›</div></div><div class="ztags"><span class="ztag ta">ПП №1119</span><span class="ztag tg">Практика</span></div>
+    <div class="drawer"><div class="drawer-inner">
+      <div class="dsec"><div class="dsec-title">Факторы определения УЗ</div><ul class="dlist">
+        <li><b>Тип угроз (1, 2, 3):</b> НДВ в системном ПО / прикладном ПО / угроз НДВ нет. Оператор определяет сам в модели угроз.</li>
+        <li><b>Категория субъектов:</b> сотрудники или не сотрудники.</li>
+        <li><b>Количество субъектов:</b> менее 100 000 или более.</li>
+        <li><b>Категория ПДн:</b> специальные, биометрические, общедоступные, иные.</li>
+      </ul></div>
+      <div class="warn-box">💡 <b>Лайфхак:</b> большинство корпоративных ИСПДн — это <b>УЗ-4</b>: иные ПДн + сотрудники + менее 100 000 + угрозы 3 типа.</div>
+      <a class="law-ref" href="https://www.consultant.ru/document/cons_doc_LAW_137616/" target="_blank">📄 ПП №1119 на КонсультантПлюс</a>
+    </div></div></div>
+
+    <div class="tcard"><div class="tcard-head"><div class="tcard-icon ic-p">🗂️</div><div class="tcard-meta"><div class="tcard-title">Приказы ФСТЭК №17 и №239</div><div class="tcard-hint">Для ГИС и объектов КИИ</div></div><div class="tcard-arrow">›</div></div><div class="ztags"><span class="ztag tp">ФСТЭК №17</span><span class="ztag tp">ФСТЭК №239</span></div>
+    <div class="drawer"><div class="drawer-inner">
+      <div class="dsec"><div class="dsec-title">Приказ №17 — ГИС</div><ul class="dlist">
+        <li><b>3 класса ГИС:</b> К3 (низкий ущерб) → К2 (значительный) → К1 (высокий).</li>
+        <li><b>Аттестация</b> — обязательна до ввода в эксплуатацию.</li>
+      </ul></div>
+      <div class="dsec"><div class="dsec-title">Приказ №239 — КИИ</div><ul class="dlist">
+        <li><b>3 категории значимости:</b> 1-я (критичная) → 2-я (высокая) → 3-я (средняя).</li>
+        <li><b>ФЗ-187</b> «О безопасности КИИ» — изучать в связке. Устанавливает уголовную ответственность.</li>
+        <li><b>Реестр КИИ</b> — ведёт ФСТЭК. Подать сведения — в течение 1 года.</li>
+      </ul></div>
+    </div></div></div>
+  </div>
+</div><!-- /zpanel-npa -->
+
+<!-- РЕГУЛЯТОРЫ -->
+<div class="zpanel" id="zpanel-reg">
+  <div class="z-sec-label">ТЕМА 4</div>
+  <div class="z-h2">Регуляторы в области ИБ</div>
+  <p class="z-sec-sub">«ФСТЭК — техника, ФСБ — крипто, РКН — ПДн» — верная формула, но на практике компетенции пересекаются.</p>
+  <div class="card-grid">
+    <div class="tcard"><div class="tcard-head"><div class="tcard-icon ic-p">🏛️</div><div class="tcard-meta"><div class="tcard-title">ФСТЭК России</div><div class="tcard-hint">Техзащита, лицензирование, сертификация, надзор</div></div><div class="tcard-arrow">›</div></div><div class="ztags"><span class="ztag tp">ФСТЭК</span><span class="ztag tg">Обязательно</span></div>
+    <div class="drawer"><div class="drawer-inner">
+      <div class="dsec"><div class="dsec-title">Полномочия ФСТЭК</div><ul class="dlist">
+        <li><b>Технические требования</b> — устанавливает меры для ГИС, ИСПДн, КИИ (Приказы №17, №21, №239).</li>
+        <li><b>Лицензирование ТЗКИ</b> — без лицензии нельзя оказывать услуги по технической защите конф. информации.</li>
+        <li><b>Сертификация СЗИ</b> — по уровням доверия (1–6 уровень) и классам защиты.</li>
+        <li><b>Реестр КИИ</b> — регистрирует значимые объекты критической инфраструктуры.</li>
+        <li><b>Проверки</b> — надзор за лицензиатами, по запросу РКН, плановые проверки ГИС и КИИ.</li>
+      </ul></div>
+    </div></div></div>
+
+    <div class="tcard"><div class="tcard-head"><div class="tcard-icon ic-r">🔑</div><div class="tcard-meta"><div class="tcard-title">ФСБ России</div><div class="tcard-hint">Криптография, СКЗИ, ГосСОПКА, НКЦКИ</div></div><div class="tcard-arrow">›</div></div><div class="ztags"><span class="ztag tr">ФСБ</span><span class="ztag tb">Крипто</span></div>
+    <div class="drawer"><div class="drawer-inner">
+      <div class="dsec"><div class="dsec-title">Полномочия ФСБ</div><ul class="dlist">
+        <li><b>СКЗИ</b> — устанавливает требования (Приказ №378), лицензирует разработку и распространение.</li>
+        <li><b>ГосСОПКА</b> — Государственная система обнаружения, предупреждения и ликвидации компьютерных атак. Операторы КИИ обязаны подключиться.</li>
+        <li><b>НКЦКИ</b> — принимает уведомления об инцидентах от операторов КИИ.</li>
+        <li><b>Сертификация СКЗИ</b> — все СКЗИ должны быть сертифицированы ФСБ для ИСПДн и ГИС.</li>
+      </ul></div>
+      <div class="warn-box">💡 <b>Практика:</b> при использовании VPN, ЭЦП, шифрования — проверяй, что продукт сертифицирован ФСБ.</div>
+    </div></div></div>
+
+    <div class="tcard"><div class="tcard-head"><div class="tcard-icon ic-b">📡</div><div class="tcard-meta"><div class="tcard-title">Роскомнадзор (РКН)</div><div class="tcard-hint">Надзор за ПДн, реестры, проверки, уведомления</div></div><div class="tcard-arrow">›</div></div><div class="ztags"><span class="ztag tb">РКН</span><span class="ztag tg">ПДн</span></div>
+    <div class="drawer"><div class="drawer-inner">
+      <div class="dsec"><div class="dsec-title">Полномочия РКН</div><ul class="dlist">
+        <li><b>Реестр операторов ПДн</b> — регистрация через pd.rkn.gov.ru до начала обработки.</li>
+        <li><b>Контроль локализации</b> — ПДн граждан РФ должны храниться на серверах в РФ.</li>
+        <li><b>Приём уведомлений об инцидентах</b> — 24 часа (первичное), 72 часа (результаты).</li>
+        <li><b>Проверки</b> — плановые (раз в 3 года), внеплановые (по жалобам). Срок документов — 10 рабочих дней.</li>
+      </ul></div>
+    </div></div></div>
+
+    <div class="tcard"><div class="tcard-head"><div class="tcard-icon ic-g">📊</div><div class="tcard-meta"><div class="tcard-title">Разграничение полномочий</div><div class="tcard-hint">Кто за что отвечает — наглядная таблица</div></div><div class="tcard-arrow">›</div></div><div class="ztags"><span class="ztag tg">Сравнение</span></div>
+    <div class="drawer"><div class="drawer-inner">
+      <table class="dtable"><tr><th>Сфера</th><th>ФСТЭК</th><th>ФСБ</th><th>РКН</th></tr>
+        <tr><td>ИСПДн (ПДн)</td><td>Технические меры (Пр. №21)</td><td>СКЗИ (Пр. №378)</td><td>Надзор и реестр</td></tr>
+        <tr><td>ГИС</td><td>Классификация, меры (Пр. №17)</td><td>СКЗИ</td><td>—</td></tr>
+        <tr><td>КИИ</td><td>Категорирование (Пр. №239)</td><td>ГосСОПКА, НКЦКИ</td><td>—</td></tr>
+        <tr><td>Лицензирование</td><td>ТЗКИ</td><td>СКЗИ</td><td>—</td></tr>
+        <tr><td>Инциденты</td><td>—</td><td>ГосСОПКА (КИИ)</td><td>Уведомление (ПДн)</td></tr>
+        <tr><td>Проверки</td><td>ГИС, КИИ, лицензиаты</td><td>По компетенции</td><td>Операторы ПДн</td></tr>
+      </table>
+      <div class="warn-box" style="margin-top:1rem">💡 В сложных системах (ГИС + ПДн + КИИ) работают все три регулятора одновременно.</div>
+    </div></div></div>
+  </div>
+</div><!-- /zpanel-reg -->
+
+<!-- АУДИТ -->
+<div class="zpanel" id="zpanel-audit">
+  <div class="z-sec-label">ТЕМА 5</div>
+  <div class="z-h2">Внешний аудит и ГОСТ Р 57580</div>
+  <p class="z-sec-sub">Взаимодействие с аудиторами — требование обеих вакансий. ГОСТ Р 57580 обязателен для финансовых организаций.</p>
+  <div class="card-grid">
+    <div class="tcard"><div class="tcard-head"><div class="tcard-icon ic-b">🔍</div><div class="tcard-meta"><div class="tcard-title">Как проходит проверка РКН?</div><div class="tcard-hint">Виды проверок, что проверяют, как готовиться</div></div><div class="tcard-arrow">›</div></div><div class="ztags"><span class="ztag tb">Аудит</span><span class="ztag tg">Практика</span></div>
+    <div class="drawer"><div class="drawer-inner">
+      <div class="dsec"><div class="dsec-title">Виды проверок</div><ul class="dlist">
+        <li><b>Плановая</b> — раз в 3 года, уведомление за 3 дня. Проверяют соответствие ФЗ-152.</li>
+        <li><b>Внеплановая</b> — по жалобе субъекта, публикации в СМИ, решению прокуратуры. Уведомление — за 24 часа.</li>
+        <li><b>Документарная</b> — запрос документов. Срок предоставления — 10 рабочих дней.</li>
+        <li><b>Выездная</b> — инспектора приезжают на объект.</li>
+      </ul></div>
+      <div class="dsec"><div class="dsec-title">Чек-лист подготовки к проверке РКН</div><ul class="dlist">
+        <li>Уведомление в реестре операторов ПДн — подано?</li>
+        <li>Политика обработки ПДн — актуальная, опубликована?</li>
+        <li>Согласия субъектов — оформлены, хранятся?</li>
+        <li>Ответственный за обработку ПДн — назначен приказом?</li>
+        <li>Инструктаж сотрудников — проведён, есть подписи?</li>
+        <li>Локализация: ПДн хранятся на серверах в РФ?</li>
+        <li>Регламент уничтожения ПДн — есть, выполняется?</li>
+      </ul></div>
+    </div></div></div>
+
+    <div class="tcard"><div class="tcard-head"><div class="tcard-icon ic-g">📊</div><div class="tcard-meta"><div class="tcard-title">ГОСТ Р 57580 — финансовые организации</div><div class="tcard-hint">Три уровня защиты, кто обязан соответствовать</div></div><div class="tcard-arrow">›</div></div><div class="ztags"><span class="ztag tg">ГОСТ 57580</span><span class="ztag ta">Финансы</span></div>
+    <div class="drawer"><div class="drawer-inner">
+      <div class="dsec"><div class="dsec-title">Три уровня защиты по ГОСТ Р 57580.1-2017</div>
+      <table class="dtable"><tr><th>Уровень</th><th>Кто обязан</th></tr>
+        <tr><td>Усиленный</td><td>Системно-значимые банки (Сбер, ВТБ...), клиринговые центры</td></tr>
+        <tr><td>Стандартный</td><td>Банки, НПФ, страховые, МФО, ПИФы — большинство ФО</td></tr>
+        <tr><td>Минимальный</td><td>Малые финансовые организации</td></tr>
+      </table></div>
+      <div class="dsec"><div class="dsec-title">Связь с другими НПА</div><ul class="dlist">
+        <li>Стандартный уровень ГОСТ соответствует УЗ-3 по ФЗ-152 / ПП №1119.</li>
+        <li>Обязателен с 2021 г. по Положениям ЦБ №683-П и №757-П.</li>
+        <li><b>Оценка соответствия</b> — раз в 3 года по ГОСТ Р 57580.2. Балльная система (цель ≥ 0.85).</li>
+      </ul></div>
+    </div></div></div>
+
+    <div class="tcard"><div class="tcard-head"><div class="tcard-icon ic-a">🤝</div><div class="tcard-meta"><div class="tcard-title">Взаимодействие с внешними аудиторами</div><div class="tcard-hint">Как готовиться, что предоставлять, как вести себя</div></div><div class="tcard-arrow">›</div></div><div class="ztags"><span class="ztag ta">Практика</span></div>
+    <div class="drawer"><div class="drawer-inner">
+      <div class="dsec"><div class="dsec-title">До аудита</div><ul class="dlist">
+        <li>Собрать весь пакет ОРД — политики, приказы, регламенты. Должны быть актуальными и подписанными.</li>
+        <li>Модель угроз — актуальная, по методике ФСТЭК 2021.</li>
+        <li>Журналы событий — логи SIEM, журналы доступа, журналы инцидентов.</li>
+        <li>Акты и протоколы — ввод СЗИ в эксплуатацию, сертификаты на СЗИ.</li>
+      </ul></div>
+      <div class="dsec"><div class="dsec-title">Во время и после аудита</div><ul class="dlist">
+        <li>Отвечать только на заданные вопросы. Все запросы фиксировать письменно.</li>
+        <li>Предписания исполнить в установленный срок (30–90 дней).</li>
+        <li>За неисполнение — административная ответственность по ст. 19.5 КоАП РФ.</li>
+      </ul></div>
+    </div></div></div>
+  </div>
+</div><!-- /zpanel-audit -->
+
+</div><!-- /z-main -->
+</div><!-- /page-zakon -->
 
 <script>
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
-}, { threshold: 0.08 });
-document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+// ===== PAGE NAVIGATION =====
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
+  document.getElementById('page-' + id).classList.add('active');
+  window.scrollTo(0, 0);
+  var tb = document.getElementById('topbar');
+  if (id === 'home') {
+    tb.classList.remove('show');
+  } else {
+    tb.classList.add('show');
+    var titles = { zakon: '01 — Законодательство' };
+    document.getElementById('topbar-title').textContent = titles[id] || '';
+  }
+}
 
-const navItems = document.querySelectorAll('.nav-item');
-const sections = document.querySelectorAll('.section[id]');
-const io = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if(e.isIntersecting) {
-      navItems.forEach(n => n.classList.remove('active'));
-      const a = document.querySelector(`.nav-item[href="#${e.target.id}"]`);
+document.getElementById('back-btn').addEventListener('click', function() {
+  showPage('home');
+});
+
+// ===== GOTO CARDS (home → subpage) =====
+document.addEventListener('click', function(e) {
+  var card = e.target.closest('.card.goto');
+  if (!card) return;
+  var target = card.getAttribute('data-goto');
+  var tab = card.getAttribute('data-tab');
+  if (target) {
+    showPage(target);
+    if (tab) {
+      // activate the right tab
+      setTimeout(function(){
+        var btn = document.querySelector('[data-ztab="' + tab + '"]');
+        if (btn) {
+          document.querySelectorAll('[data-ztab]').forEach(function(b){ b.classList.remove('active'); });
+          document.querySelectorAll('.zpanel').forEach(function(p){ p.classList.remove('active'); });
+          btn.classList.add('active');
+          var panel = document.getElementById('zpanel-' + tab);
+          if (panel) panel.classList.add('active');
+        }
+      }, 50);
+    }
+  }
+});
+
+// ===== HOME: STICKY NAV HIGHLIGHT =====
+var homeNavItems = document.querySelectorAll('.nav-item');
+var homeSections = document.querySelectorAll('.section[id]');
+var homeIO = new IntersectionObserver(function(entries){
+  entries.forEach(function(e){
+    if(e.isIntersecting){
+      homeNavItems.forEach(function(n){ n.classList.remove('active'); });
+      var a = document.querySelector('.nav-item[href="#' + e.target.id + '"]');
       if(a) a.classList.add('active');
     }
   });
 }, { rootMargin: '-40% 0px -55% 0px' });
-sections.forEach(s => io.observe(s));
+homeSections.forEach(function(s){ homeIO.observe(s); });
+
+// ===== HOME: FADE IN =====
+var fadeIO = new IntersectionObserver(function(entries){
+  entries.forEach(function(e){ if(e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.08 });
+document.querySelectorAll('.fade-in').forEach(function(el){ fadeIO.observe(el); });
+
+// ===== ZAKON: TABS =====
+document.getElementById('z-tabs-inner').addEventListener('click', function(e) {
+  var btn = e.target.closest('[data-ztab]');
+  if (!btn) return;
+  var tab = btn.getAttribute('data-ztab');
+  document.querySelectorAll('[data-ztab]').forEach(function(b){ b.classList.remove('active'); });
+  document.querySelectorAll('.zpanel').forEach(function(p){ p.classList.remove('active'); });
+  btn.classList.add('active');
+  document.getElementById('zpanel-' + tab).classList.add('active');
+  var ztabs = document.getElementById('z-tabs');
+  window.scrollTo({ top: ztabs.offsetTop - 60, behavior: 'smooth' });
+});
+
+// ===== ZAKON: TCARD ACCORDION =====
+document.addEventListener('click', function(e) {
+  var card = e.target.closest('.tcard');
+  if (!card) return;
+  var drawer = card.querySelector('.drawer');
+  if (!drawer) return;
+  var isOpen = card.classList.contains('open');
+  var grid = card.closest('.card-grid');
+  if (grid) {
+    grid.querySelectorAll('.tcard').forEach(function(c){
+      c.classList.remove('open');
+      var d = c.querySelector('.drawer');
+      if (d) d.classList.remove('open');
+    });
+  }
+  if (!isOpen) {
+    card.classList.add('open');
+    drawer.classList.add('open');
+  }
+});
+
+// ===== QUIZ =====
+var quizData = [
+  { q: 'Сколько принципов обработки ПДн установлено в ст. 5 ФЗ-152?', opts: ['5 принципов','7 принципов','10 принципов','3 принципа'], correct: 1, exp: '✅ Верно! Ст. 5 ФЗ-152 устанавливает 7 принципов: законность, конкретность целей, несовместимость баз, соответствие целям, минимизация, точность и ограничение хранения.' },
+  { q: 'В течение какого времени оператор направляет первичное уведомление об утечке ПДн в РКН?', opts: ['В течение 1 часа','В течение 24 часов','В течение 72 часов','В течение 5 рабочих дней'], correct: 1, exp: '✅ Верно! Первичное уведомление РКН — в течение 24 часов. Результаты расследования — в течение 72 часов.' },
+  { q: 'Кто устанавливает требования к СКЗИ для защиты ПДн?', opts: ['ФСТЭК России','Роскомнадзор','ФСБ России','Минцифры'], correct: 2, exp: '✅ Верно! ФСБ устанавливает требования к СКЗИ (Приказ ФСБ №378). ФСТЭК — организационно-технические меры, РКН — надзор в сфере ПДн.' },
+  { q: 'Какой УЗ присваивается ИСПДн с иными ПДн сотрудников (менее 100 000) при угрозах 3 типа?', opts: ['УЗ-1','УЗ-2','УЗ-3','УЗ-4'], correct: 3, exp: '✅ Верно! УЗ-4 — базовый уровень: иные ПДн + сотрудники + менее 100 000 субъектов + угрозы 3 типа. Самый распространённый случай для HR-систем.' },
+  { q: 'Что такое "обезличивание ПДн" по ФЗ-152?', opts: ['Удаление ПДн из базы','Действия, после которых без доп. информации нельзя определить принадлежность данных субъекту','Блокирование доступа к ПДн','Передача ПДн третьей стороне'], correct: 1, exp: '✅ Верно! Обезличивание — действия, после которых без дополнительной информации невозможно определить принадлежность ПДн конкретному субъекту (ст. 3 ФЗ-152).' }
+];
+var curQ = 0, answered = false;
+function renderQuiz() {
+  var q = quizData[curQ];
+  var dots = quizData.map(function(_,i){ return '<div style="width:8px;height:8px;border-radius:50%;background:' + (i<curQ?'var(--accent)':i===curQ?'var(--accent2)':'rgba(255,255,255,0.12)') + '"></div>'; }).join('');
+  var opts = q.opts.map(function(o,i){ return '<button class="quiz-opt" data-idx="' + i + '">' + o + '</button>'; }).join('');
+  var nextLabel = curQ < quizData.length-1 ? 'Следующий вопрос →' : 'Пройти ещё раз ↺';
+  var c = document.getElementById('quiz-container');
+  if (!c) return;
+  c.innerHTML = '<div class="quiz-wrap"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.8rem"><div style="font-size:11px;font-family:Unbounded,sans-serif;color:var(--muted);letter-spacing:.08em">ВОПРОС '+(curQ+1)+' / '+quizData.length+'</div><div style="display:flex;gap:5px">'+dots+'</div></div><div class="quiz-q">'+q.q+'</div><div class="quiz-opts" id="qopts">'+opts+'</div><div class="quiz-fb" id="qfb"></div><button class="quiz-next" id="qnext">'+nextLabel+'</button></div>';
+  answered = false;
+  document.getElementById('qopts').addEventListener('click', function(e) {
+    var btn = e.target.closest('.quiz-opt');
+    if (!btn || answered) return;
+    answered = true;
+    var idx = parseInt(btn.getAttribute('data-idx'));
+    document.querySelectorAll('.quiz-opt').forEach(function(b){ b.disabled = true; });
+    document.querySelectorAll('.quiz-opt')[q.correct].classList.add('correct');
+    if (idx !== q.correct) btn.classList.add('wrong');
+    var fb = document.getElementById('qfb');
+    fb.className = 'quiz-fb show ' + (idx===q.correct?'ok':'bad');
+    fb.textContent = idx===q.correct ? q.exp : '❌ Неверно. ' + q.exp;
+    document.getElementById('qnext').classList.add('show');
+  });
+  document.getElementById('qnext').addEventListener('click', function() {
+    curQ = curQ < quizData.length-1 ? curQ+1 : 0;
+    renderQuiz();
+  });
+}
+renderQuiz();
 </script>
 </body>
 </html>
